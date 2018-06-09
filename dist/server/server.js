@@ -4,6 +4,7 @@ var express = require("express");
 var logger = require("morgan");
 var bodyParser = require("body-parser");
 var db = require("./db/index");
+//import Router from './routes/router'
 var App = /** @class */ (function () {
     function App() {
         this.express = express();
@@ -16,6 +17,7 @@ var App = /** @class */ (function () {
         this.express.use(bodyParser.urlencoded({ extended: false }));
     };
     App.prototype.routes = function () {
+        //Router.load( this.express, './controllers')
         var router = express.Router();
         // placeholder route handler
         router.get('/', function (req, res, next) {
@@ -31,14 +33,5 @@ var App = /** @class */ (function () {
     };
     return App;
 }());
-/*
-
-App.routes('/' , function(req , res , next){
-   
-
-
-});
-
-*/
 exports.default = new App().express;
 //# sourceMappingURL=server.js.map

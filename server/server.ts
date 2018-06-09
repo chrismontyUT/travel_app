@@ -3,6 +3,7 @@ import * as logger from 'morgan';
 import * as bodyParser from 'body-parser';
 import * as db from './db/index';
 import * as fs from 'fs'
+//import Router from './routes/router'
 
 
 class App {
@@ -12,7 +13,8 @@ class App {
         constructor(){
             this.express = express();
             this.middleware();
-            this.routes();  
+			this.routes();
+
         }
 
         private middleware(): void {
@@ -22,30 +24,27 @@ class App {
         }
 
         private routes(): void {
-            let router = express.Router();
+			//Router.load( this.express, './controllers')
+
+
+			let router = express.Router();
             // placeholder route handler
             router.get('/', (req, res, next) => {
-              
+
             db.query('SELECT * FROM world.region limit $1', [100] , function(err,result) {
                     if(err){
                         console.log(err);
                         res.status(400).send(err);
                     }
                     res.status(200).send(result);
-                }); 
+                });
             });
-            this.express.use('/', router);
+			this.express.use('/', router);
+
         }
 
 }
 
-
-/*
-   
-
-});
-
-*/
 
 
 export default new App().express;
