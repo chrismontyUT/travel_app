@@ -1,5 +1,8 @@
-const { Pool } = require('pg');
-require('dotenv').config();
+//const { Pool } = require('pg');
+import * as pg from 'pg';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
  
 // postgres connection config
 const config = {
@@ -13,7 +16,7 @@ const config = {
     ssl: true
   };
 
-const pool = new Pool(config);
+const pool = new pg.Pool(config);
 
 pool.connect(function(err,client,done) {
     if(err){
@@ -21,10 +24,12 @@ pool.connect(function(err,client,done) {
     }
 });
 
+export function query (text, params, callback){
+  return pool.query(text, params, callback)
+}
 
-
-module.exports = {
+/*module.exports = {
   query: (text, params, callback) => {
     return pool.query(text, params, callback)
   }
-}
+}*/
