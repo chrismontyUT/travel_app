@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "ng": "ng",
-    "start:angular": "ng serve",
+		"start:angular": "ng serve",
+		"prestart:node": "tsc",
     "start:node": "nodemon ./dist/server/bin/www.js",
     "security-check": "nsp check",
     "build": "ng build",

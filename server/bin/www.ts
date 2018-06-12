@@ -24,7 +24,7 @@ function normalizePort(val: number|string): number|string|boolean {
     else if (port >= 0) return port;
     else return false;
   }
-  
+
 
 function onError(error: NodeJS.ErrnoException): void {
     if (error.syscall !== 'listen') throw error;
@@ -42,7 +42,7 @@ function onError(error: NodeJS.ErrnoException): void {
         throw error;
     }
   }
-  
+
 function onListening(): void {
     let addr = server.address();
     let bind = (typeof addr === 'string') ? `pipe ${addr}` : `port ${addr.port}`;
