@@ -8,10 +8,10 @@ debug('ts-express:server');
 
 const port = normalizePort(process.env.PORT || 8000);
 
-App.set('port', port);
+App.express.set('port', port);
 
 
-const server = http.createServer(App);
+const server = http.createServer(App.express);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);

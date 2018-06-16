@@ -16,7 +16,7 @@ const config = {
     ssl: true
   };
 
-class Database{
+export class Database{
 
 		pool: pg.Pool;
 
@@ -34,11 +34,12 @@ class Database{
 			})
 		}
 
-		public query(text , params , callback){
+		public query(text: string  , params: string[] , callback){
 			return this.pool.query(text, params, callback)
 		}
 
+
 	}
 
-var DB = new Database();
-export default DB;
+//var DB = new Database();
+//export default DB;

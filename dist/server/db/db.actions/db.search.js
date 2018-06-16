@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var index_1 = require("../index");
+var server_1 = require("../../server");
 var DBSearch = /** @class */ (function () {
     function DBSearch() {
     }
     DBSearch.prototype.getRegions = function (callback) {
         console.log('querying database for regions');
-        index_1.default.query('SELECT region_name FROM world.region limit $1', [10], function (err, result) {
+        server_1.default.db.query('SELECT region_name FROM world.region limit $1', ['10'], function (err, result) {
             if (err) {
                 console.log(err);
                 return callback(err);

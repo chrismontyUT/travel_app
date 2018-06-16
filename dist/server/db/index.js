@@ -30,8 +30,13 @@ var Database = /** @class */ (function () {
     Database.prototype.query = function (text, params, callback) {
         return this.pool.query(text, params, callback);
     };
+    Database.prototype.sproc = function () {
+    };
+    Database.prototype.SprocWithParams = function () {
+    };
     return Database;
 }());
-var DB = new Database();
-exports.default = DB;
+exports.Database = Database;
+//var DB = new Database();
+//export default DB;
 //# sourceMappingURL=index.js.map

@@ -1,20 +1,22 @@
 import * as express from 'express';
 import * as logger from 'morgan';
 import * as bodyParser from 'body-parser';
-//import * as db from './db/index';
+import * as db from './db/index';
 import * as fs from 'fs';
 import Router from './routes/router';
-//import
 
 
 class App {
 
 		public express: express.Application;
+		public db: db.Database;
 
         constructor(){
             this.express = express();
+			this.db = new db.Database();
 			this.middleware();
 			this.routes();
+			this.database();
 
 
         }
@@ -25,6 +27,9 @@ class App {
             this.express.use(bodyParser.urlencoded({ extended: false }));
 		}
 
+		private database(): void {
+			this.db.open();
+		}
 
         private routes(): void {
 			Router.load( this.express, 'dist/server/controllers')
@@ -43,5 +48,7 @@ class App {
 }
 
 
+var myApp = new App();
 
-export default new App().express;
+export default myApp;
+
