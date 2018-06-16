@@ -4,34 +4,34 @@ var express = require("express");
 var logger = require("morgan");
 var bodyParser = require("body-parser");
 var db = require("./db/index");
-//import Router from './routes/router'
+var router_1 = require("./routes/router");
 var App = /** @class */ (function () {
     function App() {
         this.express = express();
+        this.db = new db.Database();
         this.middleware();
         this.routes();
+        this.database();
     }
     App.prototype.middleware = function () {
         this.express.use(logger('dev'));
         this.express.use(bodyParser.json());
         this.express.use(bodyParser.urlencoded({ extended: false }));
     };
+    App.prototype.database = function () {
+        this.db.open();
+    };
     App.prototype.routes = function () {
-        //Router.load( this.express, './controllers')
+        router_1.default.load(this.express, 'dist/server/controllers');
         var router = express.Router();
         // placeholder route handler
         router.get('/', function (req, res, next) {
-            db.query('SELECT * FROM world.region limit $1', [100], function (err, result) {
-                if (err) {
-                    console.log(err);
-                    res.status(400).send(err);
-                }
-                res.status(200).send(result);
-            });
+            res.send('Welcome Home!!');
         });
         this.express.use('/', router);
     };
     return App;
 }());
-exports.default = new App().express;
+var myApp = new App();
+exports.default = myApp;
 //# sourceMappingURL=server.js.map

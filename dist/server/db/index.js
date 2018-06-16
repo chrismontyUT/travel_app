@@ -15,19 +15,28 @@ var config = {
     port: 5432,
     ssl: true
 };
-var pool = new pg.Pool(config);
-pool.connect(function (err, client, done) {
-    if (err) {
-        console.log("not able to get connection " + err);
+var Database = /** @class */ (function () {
+    function Database() {
+        this.pool = new pg.Pool(config);
     }
-});
-function query(text, params, callback) {
-    return pool.query(text, params, callback);
-}
-exports.query = query;
-/*module.exports = {
-  query: (text, params, callback) => {
-    return pool.query(text, params, callback)
-  }
-}*/
+    Database.prototype.open = function () {
+        this.pool.connect(function (err, client, done) {
+            if (err) {
+                console.log("not able to get connection " + err);
+            }
+            ;
+        });
+    };
+    Database.prototype.query = function (text, params, callback) {
+        return this.pool.query(text, params, callback);
+    };
+    Database.prototype.sproc = function () {
+    };
+    Database.prototype.SprocWithParams = function () {
+    };
+    return Database;
+}());
+exports.Database = Database;
+//var DB = new Database();
+//export default DB;
 //# sourceMappingURL=index.js.map

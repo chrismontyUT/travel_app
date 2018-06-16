@@ -6,8 +6,8 @@ var debug = require("debug");
 var server_1 = require("../server"); // The express app we just created
 debug('ts-express:server');
 var port = normalizePort(process.env.PORT || 8000);
-server_1.default.set('port', port);
-var server = http.createServer(server_1.default);
+server_1.default.express.set('port', port);
+var server = http.createServer(server_1.default.express);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
