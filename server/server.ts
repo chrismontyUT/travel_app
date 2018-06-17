@@ -11,44 +11,44 @@ class App {
 		public express: express.Application;
 		public db: db.Database;
 
-        constructor(){
-            this.express = express();
+		constructor() {
+			this.express = express();
 			this.db = new db.Database();
 			this.middleware();
 			this.routes();
 			this.database();
 
 
-        }
+		}
 
-        private middleware(): void {
-            this.express.use(logger('dev'));
-            this.express.use(bodyParser.json());
-            this.express.use(bodyParser.urlencoded({ extended: false }));
+		private middleware(): void {
+			this.express.use(logger('dev'));
+			this.express.use(bodyParser.json());
+			this.express.use(bodyParser.urlencoded({ extended: false }));
 		}
 
 		private database(): void {
 			this.db.open();
 		}
 
-        private routes(): void {
-			Router.load( this.express, 'dist/server/controllers')
+		private routes(): void {
+			Router.load( this.express, 'dist/server/controllers');
 
 
-			let router = express.Router();
-            // placeholder route handler
-            router.get('/', (req, res, next) => {
+			const router = express.Router();
+			// placeholder route handler
+			router.get('/', (req, res, next) => {
 
-				res.send('Welcome Home!!')
-            });
+				res.send('Welcome Home!!');
+			});
 			this.express.use('/', router);
 
-        }
+		}
 
 }
 
 
-var myApp = new App();
+const myApp = new App();
 
 export default myApp;
 
