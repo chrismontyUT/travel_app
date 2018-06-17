@@ -7,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MapViewComponent implements OnInit {
 
+  clickMessage: string;
+
   constructor() { }
 
   ngOnInit() {
   }
-
+  onMapViewClick() {
+    this.clickMessage = "Map View Clicked!"
+    console.log(this.clickMessage);
+ }
 }

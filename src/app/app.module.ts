@@ -10,6 +10,11 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { NavbarComponent } from './navbar/navbar.component';
 import { MapViewComponent } from './map-view/map-view.component';
+import { SearchComponent } from './search/search.component';
+import { ProfileComponent } from './profile/profile.component';
+import { SettingsComponent } from './settings/settings.component';
+import { MyMapsViewComponent } from './my-maps-view/my-maps-view.component';
+import { SaveSearchComponent } from './save-search/save-search.component';
 
 
 @NgModule({
@@ -17,6 +22,11 @@ import { MapViewComponent } from './map-view/map-view.component';
     AppComponent,
     NavbarComponent,
     MapViewComponent,
+    SearchComponent,
+    ProfileComponent,
+    SettingsComponent,
+    MyMapsViewComponent,
+    SaveSearchComponent,
   ],
   imports: [
     BrowserModule,
