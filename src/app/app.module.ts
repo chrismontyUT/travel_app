@@ -15,7 +15,9 @@ import { ProfileComponent } from './profile/profile.component';
 import { SettingsComponent } from './settings/settings.component';
 import { MyMapsViewComponent } from './my-maps-view/my-maps-view.component';
 import { SaveSearchComponent } from './save-search/save-search.component';
+import { MapComponent } from './map/map.component';
 
+declare var require: any;
 
 @NgModule({
   declarations: [
@@ -27,6 +29,7 @@ import { SaveSearchComponent } from './save-search/save-search.component';
     SettingsComponent,
     MyMapsViewComponent,
     SaveSearchComponent,
+    MapComponent,
   ],
   imports: [
     BrowserModule,
