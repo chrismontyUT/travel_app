@@ -1,0 +1,38 @@
+body {
+ font: 12px sans-serif;
+}
+
+path {
+	stroke-width: 1px;
+	stroke: white;
+	fill: #7496be;
+	cursor: pointer;
+}
+
+path:hover , path.highlighted {
+	fill: tomato;
+}
+
+path.q0-3 {
+	fill: #e0f3db;
+}
+
+path.q1-3 {
+	fill: #a8ddb5;
+}
+
+path.q2-3 {
+	fill: #43a2ca;
+}
+
+div.tooltip {
+	position: absolute;
+	background-color: white;
+	border: black;
+	color: black;
+	font-weight: bold;
+	padding: 4px 8px;
+	display: none;
+}
+
+

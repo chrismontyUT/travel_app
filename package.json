@@ -32,7 +32,8 @@
     "body-parser": "^1.18.3",
     "canvas": "^1.6.11",
     "core-js": "^2.5.4",
-    "d3": "^5.5.0",
+    "d3": "^4.9.1",
+    "d3-geo-projection": "^2.4.0",
     "debug": "^3.1.0",
     "dotenv": "^6.0.0",
     "earth-topojson": "^1.0.0",
@@ -41,6 +42,7 @@
     "hoek": "^5.0.3",
     "morgan": "^1.9.0",
     "ngx-bootstrap": "^3.0.0",
+    "ngx-smart-modal": "^6.0.3",
     "node-gyp": "^3.7.0",
     "pg": "^7.4.3",
     "pg-postgis-types": "^3.0.0",
@@ -75,7 +77,6 @@
     "nodemon": "^1.17.5",
     "protractor": "~5.3.0",
     "ts-node": "^5.0.1",
-    "tslint": "~5.9.1",
     "typescript": "^2.7.2"
   }
 }

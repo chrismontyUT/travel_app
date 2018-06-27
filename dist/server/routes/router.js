@@ -18,6 +18,9 @@ var Router = /** @class */ (function () {
                 //Recursively walk-through folders
                 _this.load(app, fullName);
             }
+            else if (file.toLowerCase().indexOf('.map') > -1) {
+                console.log('skipping' + file);
+            }
             else if (file.toLowerCase().indexOf('.js')) {
                 //Grab path to JavaScript file and use it to construct the route
                 var dirs = path.dirname(fullName).split(path.sep);
@@ -27,8 +30,12 @@ var Router = /** @class */ (function () {
                 //Generate the route
                 var baseRoute = '/' + dirs.join('/');
                 //Load the JavaScript file ("controller") and pass the router to it
-                var con = fullRoute + '/' + path.basename(file, '.js');
-                var controllerClass = require('../controllers/api/search/search').default;
+                //const con: string = fullRoute + '/' +  path.basename(file , '.js');
+                console.log('con = ../controllers' + baseRoute + '/' + path.basename(file, '.js'));
+                console.log('base =' + baseRoute);
+                var con = '../controllers' + baseRoute + '/' + path.basename(file, '.js');
+                var controllerClass = require(con).default;
+                //var controllerClass = require('../controllers/api/search/search').default;
                 var controller = new controllerClass(router);
                 //Associate the route with the router
                 app.use(baseRoute, router);
