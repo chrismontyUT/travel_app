@@ -17,6 +17,7 @@ import { MyMapsViewComponent } from './my-maps-view/my-maps-view.component';
 import { SaveSearchComponent } from './save-search/save-search.component';
 import { MapComponent } from './map/map.component';
 import {JsonService} from './json.service';
+import { PopUpService } from './pop-up.service';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,7 @@ import {JsonService} from './json.service';
 		BsDropdownModule.forRoot(),
 		HttpClientModule
   ],
-  providers: [JsonService],
+  providers: [JsonService,PopUpService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,3 +1,5 @@
-<p>
-  search works!
-</p>
+
+
+<div class="fade-from-top" [ngClass]="{'show': (show$ | async) }">
+  <button (click)="onNewSearchClick()" (click)="showPopUp()" mat-button>New Search</button>
+</div>

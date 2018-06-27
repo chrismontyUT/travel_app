@@ -77,9 +77,9 @@ export class MapComponent implements OnInit, OnChanges {
 			.attr('fill','#1c5785')
 			//.attr( 'class', 'state' )
 			.attr( 'd', this.path )
-			.on('mouseover' , this.showTooltip)
-			.on('mousemove' , this.moveTooltip)
-			.on('mouseout'  , this.hideTooltip);
+			//.on('mouseover' , this.showTooltip)
+			//.on('mousemove' , this.moveTooltip)
+			//.on('mouseout'  , this.hideTooltip);
 	}
 
 	showTooltip(d){
