@@ -24,6 +24,9 @@ class Router {
                 //Recursively walk-through folders
                 this.load(app, fullName);
 			}
+			else if (file.toLowerCase().indexOf('.map') > -1){
+				console.log('skipping' + file);
+			}
 			else if (file.toLowerCase().indexOf('.js')) {
                 //Grab path to JavaScript file and use it to construct the route
                 let dirs = path.dirname(fullName).split(path.sep);
@@ -35,9 +38,14 @@ class Router {
                 //Generate the route
 				const baseRoute: string = '/' + dirs.join('/');
 				//Load the JavaScript file ("controller") and pass the router to it
-				const con: string = fullRoute + '/' +  path.basename(file , '.js');
+				//const con: string = fullRoute + '/' +  path.basename(file , '.js');
 
-				var controllerClass = require('../controllers/api/search/search').default;
+				console.log('con = ../controllers' + baseRoute + '/' + path.basename(file , '.js'));
+				console.log('base =' + baseRoute);
+				var con: string = '../controllers' + baseRoute + '/' + path.basename(file , '.js')
+				var controllerClass = require(con).default;
+
+				//var controllerClass = require('../controllers/api/search/search').default;
                 const controller = new controllerClass(router);
 
 				//Associate the route with the router

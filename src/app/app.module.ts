@@ -16,8 +16,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { MyMapsViewComponent } from './my-maps-view/my-maps-view.component';
 import { SaveSearchComponent } from './save-search/save-search.component';
 import { MapComponent } from './map/map.component';
-
-declare var require: any;
+import {JsonService} from './json.service';
 
 @NgModule({
   declarations: [
@@ -41,9 +40,10 @@ declare var require: any;
     MatIconModule,
     MatListModule,
     TooltipModule.forRoot(),
-    BsDropdownModule.forRoot(),
+		BsDropdownModule.forRoot(),
+		HttpClientModule
   ],
-  providers: [],
+  providers: [JsonService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

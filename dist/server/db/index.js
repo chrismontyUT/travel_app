@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-//const { Pool } = require('pg');
+// const { Pool } = require('pg');
 var pg = require("pg");
 var dotenv = require("dotenv");
 dotenv.config();
@@ -22,21 +22,16 @@ var Database = /** @class */ (function () {
     Database.prototype.open = function () {
         this.pool.connect(function (err, client, done) {
             if (err) {
-                console.log("not able to get connection " + err);
+                console.log('not able to get connection ' + err);
             }
-            ;
         });
     };
     Database.prototype.query = function (text, params, callback) {
         return this.pool.query(text, params, callback);
     };
-    Database.prototype.sproc = function () {
-    };
-    Database.prototype.SprocWithParams = function () {
-    };
     return Database;
 }());
 exports.Database = Database;
-//var DB = new Database();
-//export default DB;
+// var DB = new Database();
+// export default DB;
 //# sourceMappingURL=index.js.map
