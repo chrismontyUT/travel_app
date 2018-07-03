@@ -34,6 +34,7 @@
     "core-js": "^2.5.4",
     "d3": "^4.9.1",
     "d3-geo-projection": "^2.4.0",
+    "d3-tip": "^0.9.1",
     "debug": "^3.1.0",
     "dotenv": "^6.0.0",
     "earth-topojson": "^1.0.0",
