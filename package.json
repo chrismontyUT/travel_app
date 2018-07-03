@@ -28,7 +28,6 @@
     "@types/d3": "^5.0.0",
     "@types/pg": "^7.4.9",
     "@types/pg-promise": "^5.4.3",
-    "@types/topojson": "^3.2.1",
     "body-parser": "^1.18.3",
     "canvas": "^1.6.11",
     "core-js": "^2.5.4",

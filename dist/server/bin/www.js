@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // This will be our application entry. We'll setup our server here.
 var http = require("http");
 var debug = require("debug");
+//import {IDebugger} from 'debug';
 var server_1 = require("../server"); // The express app we just created
 debug('ts-express:server');
 var port = normalizePort(process.env.PORT || 8000);

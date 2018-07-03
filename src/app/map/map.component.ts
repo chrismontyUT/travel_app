@@ -68,6 +68,7 @@ export class MapComponent implements OnInit, OnChanges {
 		//console.log(topojson.feature(this.world , this.world.objects.subunits));
 		//this.tooltip = d3.select('body').append('div')
 		//				.attr('class' , 'tooltip')
+		console.log(this.world.objects.subunits.type === "GeometryCollection")
 		features.selectAll('path')
 			.data(topojson.feature(this.world , this.world.objects.subunits).features)
 			.enter()

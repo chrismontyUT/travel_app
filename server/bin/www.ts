@@ -1,6 +1,6 @@
 // This will be our application entry. We'll setup our server here.
 import * as http from 'http';
-import debug from 'debug';
+import * as debug from 'debug';
 //import {IDebugger} from 'debug';
 
 import App from '../server';  // The express app we just created
