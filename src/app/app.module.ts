@@ -20,7 +20,6 @@ import { JsonService } from './json.service';
 import { PopUpService } from './pop-up.service';
 import { DialogDemoComponent } from './dialog-demo/dialog-demo.component';
 import { MyDialogComponent } from './my-dialog/my-dialog.component';
-//mport { MAT_DIALOG_DATA } from '@angular/material';
 import { MatDialogModule, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @NgModule({

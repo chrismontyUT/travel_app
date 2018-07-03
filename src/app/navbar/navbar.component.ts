@@ -12,7 +12,8 @@ import { SearchComponent } from '../search/search.component';
 export class NavbarComponent implements OnInit {
 
   clickMessage: string;
-
+  dialogResult: string;
+  
   constructor(public dialog:MatDialog) { }
 
   ngOnInit() {
@@ -29,4 +30,5 @@ export class NavbarComponent implements OnInit {
       this.dialogResult = result;
     });
 
+}
 }
