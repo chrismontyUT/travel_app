@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule,
-         MatListModule, MatIconRegistry } from '@angular/material';
+         MatListModule, MatCardModule } from '@angular/material';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -16,7 +16,11 @@ import { SettingsComponent } from './settings/settings.component';
 import { MyMapsViewComponent } from './my-maps-view/my-maps-view.component';
 import { SaveSearchComponent } from './save-search/save-search.component';
 import { MapComponent } from './map/map.component';
-import {JsonService} from './json.service';
+import { JsonService } from './json.service';
+import { PopUpService } from './pop-up.service';
+import { DialogDemoComponent } from './dialog-demo/dialog-demo.component';
+import { MyDialogComponent } from './my-dialog/my-dialog.component';
+import { MatDialogModule, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -29,7 +33,11 @@ import {JsonService} from './json.service';
     MyMapsViewComponent,
     SaveSearchComponent,
     MapComponent,
+    DialogDemoComponent,
+    MyDialogComponent,
   ],
+  //entryComponents: [MyDialogComponent],
+  entryComponents: [SearchComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -39,11 +47,13 @@ import {JsonService} from './json.service';
     MatSidenavModule,
     MatIconModule,
     MatListModule,
+    MatCardModule,
+    MatDialogModule,
     TooltipModule.forRoot(),
 		BsDropdownModule.forRoot(),
-		HttpClientModule
+    HttpClientModule,
   ],
-  providers: [JsonService],
+  providers: [JsonService, PopUpService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

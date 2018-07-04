@@ -74,15 +74,6 @@ export class MapComponent implements OnInit, OnChanges {
 			.enter()
 			.append('path')
 			.attr( 'd', this.path )
-			.on('mouseover' , (d) => {
-				})
-			.on('mousemove' , () => {
-				//this.tooltip.style('top' , (d3.event.pageY+this.tooltipOffset.y)+'px')
-				//	.style('left' , (d3.event.pageX+this.tooltipOffset.x)+'px');
-				})
-			.on('mouseout' , () => {
-				//this.tooltip.style('display' , 'none');
-				});
 	}
 
 	ngAfterViewInit(){
