@@ -8,6 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 var platform_browser_1 = require("@angular/platform-browser");
 var core_1 = require("@angular/core");
+var http_1 = require("@angular/common/http");
 var app_component_1 = require("./app.component");
 var animations_1 = require("@angular/platform-browser/animations");
 var layout_1 = require("@angular/cdk/layout");
@@ -22,6 +23,7 @@ var settings_component_1 = require("./settings/settings.component");
 var my_maps_view_component_1 = require("./my-maps-view/my-maps-view.component");
 var save_search_component_1 = require("./save-search/save-search.component");
 var map_component_1 = require("./map/map.component");
+var json_service_1 = require("./json.service");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -49,8 +51,9 @@ var AppModule = /** @class */ (function () {
                 material_1.MatListModule,
                 tooltip_1.TooltipModule.forRoot(),
                 dropdown_1.BsDropdownModule.forRoot(),
+                http_1.HttpClientModule
             ],
-            providers: [],
+            providers: [json_service_1.JsonService],
             bootstrap: [app_component_1.AppComponent]
         })
     ], AppModule);
