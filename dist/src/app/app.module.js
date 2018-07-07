@@ -24,6 +24,10 @@ var my_maps_view_component_1 = require("./my-maps-view/my-maps-view.component");
 var save_search_component_1 = require("./save-search/save-search.component");
 var map_component_1 = require("./map/map.component");
 var json_service_1 = require("./json.service");
+var pop_up_service_1 = require("./pop-up.service");
+var dialog_demo_component_1 = require("./dialog-demo/dialog-demo.component");
+var my_dialog_component_1 = require("./my-dialog/my-dialog.component");
+var dialog_1 = require("@angular/material/dialog");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -39,7 +43,11 @@ var AppModule = /** @class */ (function () {
                 my_maps_view_component_1.MyMapsViewComponent,
                 save_search_component_1.SaveSearchComponent,
                 map_component_1.MapComponent,
+                dialog_demo_component_1.DialogDemoComponent,
+                my_dialog_component_1.MyDialogComponent,
             ],
+            //entryComponents: [MyDialogComponent],
+            entryComponents: [search_component_1.SearchComponent],
             imports: [
                 platform_browser_1.BrowserModule,
                 animations_1.BrowserAnimationsModule,
@@ -49,11 +57,13 @@ var AppModule = /** @class */ (function () {
                 material_1.MatSidenavModule,
                 material_1.MatIconModule,
                 material_1.MatListModule,
+                material_1.MatCardModule,
+                dialog_1.MatDialogModule,
                 tooltip_1.TooltipModule.forRoot(),
                 dropdown_1.BsDropdownModule.forRoot(),
-                http_1.HttpClientModule
+                http_1.HttpClientModule,
             ],
-            providers: [json_service_1.JsonService],
+            providers: [json_service_1.JsonService, pop_up_service_1.PopUpService],
             bootstrap: [app_component_1.AppComponent]
         })
     ], AppModule);

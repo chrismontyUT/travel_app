@@ -10,6 +10,8 @@ import { MyDialogComponent } from '../my-dialog/my-dialog.component';
 })
 export class DialogDemoComponent implements OnInit {
 
+	dialogResult:string;
+
   constructor(public dialog: MatDialog) { }
 
   ngOnInit() {

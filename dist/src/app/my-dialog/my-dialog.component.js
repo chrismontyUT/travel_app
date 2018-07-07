@@ -14,38 +14,30 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var material_1 = require("@angular/material");
-var SearchComponent = /** @class */ (function () {
-    function SearchComponent(thisDialogRef, data) {
+var material_2 = require("@angular/material");
+var MyDialogComponent = /** @class */ (function () {
+    function MyDialogComponent(thisDialogRef, data) {
         this.thisDialogRef = thisDialogRef;
         this.data = data;
     }
-    //constructor(protected popUpSvc:PopUpService){}
-    //show$;
-    SearchComponent.prototype.ngOnInit = function () {
-        //this.show$ = this.popUpSvc.showPopUp$;
+    MyDialogComponent.prototype.ngOnInit = function () {
     };
-    SearchComponent.prototype.onCloseConfirm = function () {
+    MyDialogComponent.prototype.onCloseConfirm = function () {
         this.thisDialogRef.close('Confirm');
     };
-    SearchComponent.prototype.onCloseCancel = function () {
+    MyDialogComponent.prototype.onCloseCancel = function () {
         this.thisDialogRef.close('Cancel');
     };
-    SearchComponent = __decorate([
+    MyDialogComponent = __decorate([
         core_1.Component({
-            selector: 'app-search',
-            //providers: [{
-            //provide: MatDialogRef,
-            //useValue: {
-            //close: (dialogResult: any) => { }
-            //}
-            //}],
-            templateUrl: './search.component.html',
-            styleUrls: ['./search.component.scss']
+            selector: 'app-my-dialog',
+            templateUrl: './my-dialog.component.html',
+            styleUrls: ['./my-dialog.component.scss']
         }),
         __param(1, core_1.Inject(material_1.MAT_DIALOG_DATA)),
-        __metadata("design:paramtypes", [material_1.MatDialogRef, String])
-    ], SearchComponent);
-    return SearchComponent;
+        __metadata("design:paramtypes", [material_2.MatDialogRef, String])
+    ], MyDialogComponent);
+    return MyDialogComponent;
 }());
-exports.SearchComponent = SearchComponent;
-//# sourceMappingURL=search.component.js.map
+exports.MyDialogComponent = MyDialogComponent;
+//# sourceMappingURL=my-dialog.component.js.map

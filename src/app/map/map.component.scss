@@ -1,30 +1,30 @@
-body {
- font: 12px sans-serif;
+app-map {
+	display: block;
+	height: 91.65%;
+	width: 100%;
 }
 
 path {
-	stroke-width: 1px;
+	stroke-width: .1px;
 	stroke: white;
-	fill: #7496be;
+	fill: #74be9b;
 	cursor: pointer;
 	width: contain;
 	height: contain;
 }
 
 path:hover , path.highlighted {
-	fill: tomato;
+	fill: orchid;
 }
 
 .features {
 	transform: scale(3);
 }
-//div.tooltip {
-//	position: absolute;
-//	background-color: white;
-//	border: black;
-//	color: black;
-//	font-weight: bold;
-//	padding: 4px 8px;
-//	display: inline-block;
-//}
 
+
+.background {
+	fill: blue;
+	pointer-events: all;
+	height: 100%;
+	width: 100%;
+  }
