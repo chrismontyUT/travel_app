@@ -11,7 +11,6 @@ import { SearchComponent } from '../search/search.component';
 })
 export class NavbarComponent implements OnInit {
 
-  clickMessage: string;
   dialogResult: string;
   
   constructor(public dialog:MatDialog) { }
@@ -21,8 +20,9 @@ export class NavbarComponent implements OnInit {
 
   openDialog() {
     let dialogRef = this.dialog.open(SearchComponent, {
-      width: 'contain',
-      data: 'This text is passed into the dialog!'
+      width: '90%',
+      height: '90%',
+      //data: 'This text is passed into the dialog!'
     });
 
     dialogRef.afterClosed().subscribe(result => {
