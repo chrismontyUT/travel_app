@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule,
-         MatListModule, MatCardModule } from '@angular/material';
+         MatListModule, MatCardModule, MatProgressBarModule } from '@angular/material';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -21,6 +21,7 @@ import { PopUpService } from './pop-up.service';
 import { DialogDemoComponent } from './dialog-demo/dialog-demo.component';
 import { MyDialogComponent } from './my-dialog/my-dialog.component';
 import { MatDialogModule, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { MatDialogModule, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angu
     MapComponent,
     DialogDemoComponent,
     MyDialogComponent,
+    ProgressBarComponent,
   ],
   //entryComponents: [MyDialogComponent],
   entryComponents: [SearchComponent],
@@ -49,6 +51,7 @@ import { MatDialogModule, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angu
     MatListModule,
     MatCardModule,
     MatDialogModule,
+    MatProgressBarModule,
     TooltipModule.forRoot(),
 		BsDropdownModule.forRoot(),
     HttpClientModule,

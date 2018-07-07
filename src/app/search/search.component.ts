@@ -5,12 +5,6 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-search',
-  //providers: [{
-    //provide: MatDialogRef,
-    //useValue: {
-      //close: (dialogResult: any) => { }
-    //}
-  //}],
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss']
 })
@@ -30,11 +24,11 @@ export class SearchComponent implements OnInit {
     //this.show$ = this.popUpSvc.showPopUp$;
   }
 
-  onCloseConfirm() {
-    this.thisDialogRef.close('Confirm');
+  onYesIKnow() {
+    this.thisDialogRef.close('Yes I Know');
   }
-  onCloseCancel() {
-    this.thisDialogRef.close('Cancel');
+  onNoIDont() {
+    this.thisDialogRef.close('No I Dont');
   }
 
   //showPopUp() { 

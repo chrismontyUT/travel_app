@@ -1,15 +1,19 @@
 <div>
-  <h2 mat-dialog-title>MY DIALOG</h2>
+  <h2 mat-dialog-title>New Search</h2>
   <hr>
-  <mat-dialog-content>
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam maxime cum dolorem officiis assumenda rem alias, omnis nobis nam. Ratione soluta libero architecto cupiditate at fugit consectetur sit dignissimos vitae.
+  <mat-dialog-content class="question">
+    Do you know where you are going on your vacation?
     <br>
     <br>
     <strong>{{data}}</strong>
   </mat-dialog-content>
   <hr>
-  <mat-dialog-actions>
-    <button mat-raised-button (click)="onCloseConfirm()">CONFIRM</button>&nbsp;
-    <button mat-raised-button (click)="onCloseCancel()">CANCEL</button>
+  <mat-dialog-actions id="container">
+    <button mat-raised-button (click)="onYesIKnow()" class="answer">Yes I know</button>
+    <button mat-raised-button (click)="onNoIDont()" class="answer">No I don't know yet</button>
   </mat-dialog-actions>
+  <mat-dialog-content>
+  <app-progress-bar></app-progress-bar>
+</mat-dialog-content>
 </div>
+
