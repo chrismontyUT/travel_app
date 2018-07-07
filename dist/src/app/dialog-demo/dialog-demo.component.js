@@ -11,16 +11,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var material_1 = require("@angular/material");
-var search_component_1 = require("../search/search.component");
-var NavbarComponent = /** @class */ (function () {
-    function NavbarComponent(dialog) {
+var my_dialog_component_1 = require("../my-dialog/my-dialog.component");
+var DialogDemoComponent = /** @class */ (function () {
+    function DialogDemoComponent(dialog) {
         this.dialog = dialog;
     }
-    NavbarComponent.prototype.ngOnInit = function () {
+    DialogDemoComponent.prototype.ngOnInit = function () {
     };
-    NavbarComponent.prototype.openDialog = function () {
+    DialogDemoComponent.prototype.openDialog = function () {
         var _this = this;
-        var dialogRef = this.dialog.open(search_component_1.SearchComponent, {
+        var dialogRef = this.dialog.open(my_dialog_component_1.MyDialogComponent, {
             width: 'contain',
             data: 'This text is passed into the dialog!'
         });
@@ -29,16 +29,16 @@ var NavbarComponent = /** @class */ (function () {
             _this.dialogResult = result;
         });
     };
-    NavbarComponent = __decorate([
+    DialogDemoComponent = __decorate([
         core_1.Component({
-            selector: 'app-navbar',
-            templateUrl: './navbar.component.html',
-            providers: [search_component_1.SearchComponent],
-            styleUrls: ['./navbar.component.scss']
+            selector: 'app-dialog-demo',
+            templateUrl: './dialog-demo.component.html',
+            providers: [my_dialog_component_1.MyDialogComponent],
+            styleUrls: ['./dialog-demo.component.scss']
         }),
         __metadata("design:paramtypes", [material_1.MatDialog])
-    ], NavbarComponent);
-    return NavbarComponent;
+    ], DialogDemoComponent);
+    return DialogDemoComponent;
 }());
-exports.NavbarComponent = NavbarComponent;
-//# sourceMappingURL=navbar.component.js.map
+exports.DialogDemoComponent = DialogDemoComponent;
+//# sourceMappingURL=dialog-demo.component.js.map
