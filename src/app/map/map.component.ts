@@ -12,7 +12,6 @@ import {JsonService} from '../json.service';
 	encapsulation: ViewEncapsulation.None
 	})
 export class MapComponent implements OnInit, OnChanges {
-	@ViewChild('map') private mapContainer: ElementRef;
 	@Input() private mapdata: Array<any>;
 	private margin: any;
 	private svg: any;
@@ -33,14 +32,13 @@ export class MapComponent implements OnInit, OnChanges {
 		this.height;
 		this.projection;
 		this.path;
-		this.tooltipOffset = {x: 5 , y: -25};
+		this.tooltipOffset = {x: 15 , y: -35};
 		this.tooltip;
 		this.active = d3.select(null)
 		this.features;
 	}
 
 	ngOnInit() {
-
 		this.jsonservice.getData('assets/topojson/countries.json')
 			.subscribe(data => this.setMap(data) , err => console.log(err));
 	}
@@ -48,49 +46,74 @@ export class MapComponent implements OnInit, OnChanges {
 
 	setMap(data:Object){
 
+		var width: number = window.innerWidth;
+		var height: number = window.innerHeight  * .9165;
+
+		console.log(height , height * .9165);
+
 		this.world = data;
+
+		this.svg = d3.select('app-map').append('svg')
+			.attr('width', '100%')
+			.attr('height', height)
+			//lq.attr('viewBox' , '0 0 1000 1000')
+			//.attr("preserveAspectRatio", "xMinYMin meet");
+
 
 
 		this.projection = d3_projection.geoRobinson()
-			.scale(80)
-			//.center([150 ,10])
-			.translate([250,130]);
+			.scale(200)
+			//.center([0 ,-110])
+			.translate([ width / 2 , height / 2])
+			.rotate([-10, 0, 0]);
 
 		this.path = d3.geoPath()
 			.projection(this.projection);
-
-		this.svg = d3.select('app-map').append('svg')
-			//.attr("preserveAspectRatio", "xMinYMin meet")
-			//.attr("viewBox", "0 0 1920 1080")
-			.attr('width', '100%')
-			.attr('height', '100%')
 
 		this.svg.append('rect')
     		.attr("class", "background")
     		//.on("click", reset);
 
-		this.features = this.svg.append('g')
+		this.features = this.svg.append('svg')
 			.attr('class' , 'features')
+			//.attr('transform' , 'scale(2,2)')
 
-		//console.log(topojson.feature(this.world , this.world.objects.subunits));
-		//this.tooltip = d3.select('body').append('div')
-		//				.attr('class' , 'tooltip')
+		this.tooltip = d3.select('app-map').append('div')
+				.attr('class' , 'tooltip')
+				.style('opacity', 0);
+
 		this.features.selectAll('path')
 			.data(topojson.feature(this.world , this.world.objects.subunits).features)
 			.enter()
 			.append('path')
 			.attr( 'd', this.path )
-			.on('mouseover' , (d) => {
+			.on('mouseover' , (d) => { this.showToolTip(d);
 				})
 			.on('mousemove' , () => {
-				//this.tooltip.style('top' , (d3.event.pageY+this.tooltipOffset.y)+'px')
-				//	.style('left' , (d3.event.pageX+this.tooltipOffset.x)+'px');
+				this.tooltip.style('top' , (d3.event.pageY+this.tooltipOffset.y)+'px')
+					.style('left' , (d3.event.pageX+this.tooltipOffset.x)+'px');
 				})
 			.on('mouseout' , () => {
-				//this.tooltip.style('display' , 'none');
+				this.hideToolTip();
 				})
-			.on('click' , this.clicked);
+			//.on('click' , this.clicked);
+
+			console.log(this.features.width, this.features.height)
 	}
+
+	showToolTip(d){
+		this.tooltip.style('opacity' , .90)
+			.html(d.properties.name);
+	}
+
+	moveToolTip(){
+
+	}
+
+	hideToolTip(){
+		this.tooltip.style('opacity' , 0);
+	}
+
 	clicked(d) {
 		console.log(d)
 		var rect = document.getElementById('rect');
