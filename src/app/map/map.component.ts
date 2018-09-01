@@ -24,70 +24,69 @@ export class MapComponent implements OnInit, OnChanges {
 	private tooltip: any;
 	public active: any;
 	private features: any;
+	private featureCollection: any;
 
 	constructor(private jsonservice: JsonService) {
 		this.margin = { top: 20, bottom: 20, left: 20, right: 20};
 		this.svg;
-		this.width;
-		this.height;
+		this.width = window.innerWidth;
+		this.height = window.innerHeight  * .9165;
 		this.projection;
 		this.path;
 		this.tooltipOffset = {x: 15 , y: -35};
 		this.tooltip;
 		this.active = d3.select(null)
 		this.features;
+		this.featureCollection;
+
+
+		this.jsonservice.getData('assets/topojson/countries.json')
+			.subscribe(data => this.setMap(data) , err => console.log(err));
 	}
 
 	ngOnInit() {
-		this.jsonservice.getData('assets/topojson/countries.json')
-			.subscribe(data => this.setMap(data) , err => console.log(err));
+
 	}
 
 
 	setMap(data:Object){
 
-		var width: number = window.innerWidth;
-		var height: number = window.innerHeight  * .9165;
-
-		console.log(height , height * .9165);
-
 		this.world = data;
 
-		this.svg = d3.select('app-map').append('svg')
-			.attr('width', '100%')
-			.attr('height', height)
-			//lq.attr('viewBox' , '0 0 1000 1000')
-			//.attr("preserveAspectRatio", "xMinYMin meet");
-
-
-
+		this.featureCollection = topojson.feature(this.world , this.world.objects.subunits);
+		console.log(this.featureCollection);
 		this.projection = d3_projection.geoRobinson()
-			.scale(200)
-			//.center([0 ,-110])
-			.translate([ width / 2 , height / 2])
-			.rotate([-10, 0, 0]);
+			.rotate([-10, 0, 0])
+			.fitSize([this.width, this.height], this.featureCollection);
 
 		this.path = d3.geoPath()
 			.projection(this.projection);
-
-		this.svg.append('rect')
-    		.attr("class", "background")
-    		//.on("click", reset);
-
-		this.features = this.svg.append('svg')
-			.attr('class' , 'features')
-			//.attr('transform' , 'scale(2,2)')
 
 		this.tooltip = d3.select('app-map').append('div')
 				.attr('class' , 'tooltip')
 				.style('opacity', 0);
 
+		this.svg = d3.select('app-map').append('svg')
+			.attr('width', '100%')
+			.attr('height', this.height)
+
+
+		this.svg.append('rect')
+    		.attr("class", "background")
+			.on("click", () => {
+				this.reset()}
+			);
+
+
+		this.features = this.svg.append('g')
+
 		this.features.selectAll('path')
-			.data(topojson.feature(this.world , this.world.objects.subunits).features)
+			.data(this.featureCollection.features)
 			.enter()
 			.append('path')
 			.attr( 'd', this.path )
-			.on('mouseover' , (d) => { this.showToolTip(d);
+			.on('mouseover' , (d) => {
+				this.showToolTip(d);
 				})
 			.on('mousemove' , () => {
 				this.tooltip.style('top' , (d3.event.pageY+this.tooltipOffset.y)+'px')
@@ -96,9 +95,10 @@ export class MapComponent implements OnInit, OnChanges {
 			.on('mouseout' , () => {
 				this.hideToolTip();
 				})
-			//.on('click' , this.clicked);
+			.on('click' , (d) => {
+				this.clicked(d);
+			});
 
-			console.log(this.features.width, this.features.height)
 	}
 
 	showToolTip(d){
@@ -115,34 +115,16 @@ export class MapComponent implements OnInit, OnChanges {
 	}
 
 	clicked(d) {
-		console.log(d)
-		var rect = document.getElementById('rect');
-		console.log(rect);
-		if (this.active.node() === this) return this.reset();
-		this.active.classed("active", false);
-		this.active = d3.select(d).classed("active", true);
-
-		//var bounds = this.path.bounds(d),
-		//	dx = bounds[1][0] - bounds[0][0],
-		//	dy = bounds[1][1] - bounds[0][1],
-		//	x = (bounds[0][0] + bounds[1][0]) / 2,
-		//	y = (bounds[0][1] + bounds[1][1]) / 2,
-		//	scale = .9 / Math.max(dx / width, dy / height),
-		//	translate = [width / 2 - scale * x, height / 2 - scale * y];
-
-		//this.features.transition()
-		//	.duration(750)
-		//	.style("stroke-width", 1.5 / scale + "px")
-		//	.attr("transform", "translate(" + translate + ")scale(" + scale + ")");
+		console.log(d);
+		if (this.active.data()[0] === d)  return this.reset();
+		this.active.classed("highlighted", false);
+		this.active = d3.selectAll('path')
+			.filter(function(i){return i['id'] == d.id })
+			.classed("highlighted" , true);
 	  }
 	reset() {
-		this.active.classed("active", false);
+		this.active.classed("highlighted", false);
 		this.active = d3.select(null);
-
-		this.features.transition()
-			.duration(750)
-			.style("stroke-width", "1.5px")
-			.attr("transform", "");
 	  }
 
 

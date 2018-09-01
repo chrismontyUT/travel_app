@@ -4,21 +4,19 @@ app-map {
 	width: 100%;
 }
 
-path {
+path{
 	stroke-width: .1px;
 	stroke: white;
 	fill: #74be9b;
 	cursor: pointer;
-	width: contain;
-	height: contain;
 }
 
-path:hover , path.highlighted {
+path:hover  {
 	fill: orchid;
 }
 
-.features {
-	//transform: scale(3);
+.highlighted{
+	fill: #beaa74;
 }
 
 
