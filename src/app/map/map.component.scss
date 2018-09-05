@@ -4,21 +4,19 @@ app-map {
 	width: 100%;
 }
 
-path {
+path{
 	stroke-width: .1px;
 	stroke: white;
 	fill: #74be9b;
 	cursor: pointer;
-	width: contain;
-	height: contain;
 }
 
-path:hover , path.highlighted {
+path:hover  {
 	fill: orchid;
 }
 
-.features {
-	transform: scale(3);
+.highlighted{
+	fill: #beaa74;
 }
 
 
@@ -27,4 +25,35 @@ path:hover , path.highlighted {
 	pointer-events: all;
 	height: 100%;
 	width: 100%;
+  }
+
+
+div.tooltip {
+	position: absolute;
+	text-align: center;
+	width: 80px;
+	height: 28px;
+	//padding: 2px;
+	font: 11px sans-serif;
+	//background: lightsteelblue;
+	border: 0px;
+	border-radius: 8px;
+	line-height: 1;
+ 	font-weight: bold;
+  	padding: 8px;
+  	background: rgba(0, 0, 0, 0.8);
+  	color: #fff;
+  	border-radius: 2px;
+  }
+
+
+div.tooltip:after {
+	box-sizing: border-box;
+	display: inline;
+	font-size: 10px;
+	line-height: 1;
+	color: rgba(0, 0, 0, 0.8);
+	content: "\25BC";
+	position: absolute;
+	text-align: center;
   }

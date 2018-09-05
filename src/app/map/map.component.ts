@@ -12,7 +12,6 @@ import {JsonService} from '../json.service';
 	encapsulation: ViewEncapsulation.None
 	})
 export class MapComponent implements OnInit, OnChanges {
-	@ViewChild('map') private mapContainer: ElementRef;
 	@Input() private mapdata: Array<any>;
 	private margin: any;
 	private svg: any;
@@ -25,24 +24,28 @@ export class MapComponent implements OnInit, OnChanges {
 	private tooltip: any;
 	public active: any;
 	private features: any;
+	private featureCollection: any;
 
 	constructor(private jsonservice: JsonService) {
 		this.margin = { top: 20, bottom: 20, left: 20, right: 20};
 		this.svg;
-		this.width;
-		this.height;
+		this.width = window.innerWidth;
+		this.height = window.innerHeight  * .9165;
 		this.projection;
 		this.path;
-		this.tooltipOffset = {x: 5 , y: -25};
+		this.tooltipOffset = {x: 15 , y: -35};
 		this.tooltip;
 		this.active = d3.select(null)
 		this.features;
+		this.featureCollection;
+
+
+		this.jsonservice.getData('assets/topojson/countries.json')
+			.subscribe(data => this.setMap(data) , err => console.log(err));
 	}
 
 	ngOnInit() {
 
-		this.jsonservice.getData('assets/topojson/countries.json')
-			.subscribe(data => this.setMap(data) , err => console.log(err));
 	}
 
 
@@ -50,76 +53,78 @@ export class MapComponent implements OnInit, OnChanges {
 
 		this.world = data;
 
-
+		this.featureCollection = topojson.feature(this.world , this.world.objects.subunits);
+		console.log(this.featureCollection);
 		this.projection = d3_projection.geoRobinson()
-			.scale(80)
-			//.center([150 ,10])
-			.translate([250,130]);
+			.rotate([-10, 0, 0])
+			.fitSize([this.width, this.height], this.featureCollection);
 
 		this.path = d3.geoPath()
 			.projection(this.projection);
 
+		this.tooltip = d3.select('app-map').append('div')
+				.attr('class' , 'tooltip')
+				.style('opacity', 0);
+
 		this.svg = d3.select('app-map').append('svg')
-			//.attr("preserveAspectRatio", "xMinYMin meet")
-			//.attr("viewBox", "0 0 1920 1080")
 			.attr('width', '100%')
-			.attr('height', '100%')
+			.attr('height', this.height)
+
 
 		this.svg.append('rect')
     		.attr("class", "background")
-    		//.on("click", reset);
+			.on("click", () => {
+				this.reset()}
+			);
+
 
 		this.features = this.svg.append('g')
-			.attr('class' , 'features')
 
-		//console.log(topojson.feature(this.world , this.world.objects.subunits));
-		//this.tooltip = d3.select('body').append('div')
-		//				.attr('class' , 'tooltip')
 		this.features.selectAll('path')
-			.data(topojson.feature(this.world , this.world.objects.subunits).features)
+			.data(this.featureCollection.features)
 			.enter()
 			.append('path')
 			.attr( 'd', this.path )
 			.on('mouseover' , (d) => {
+				this.showToolTip(d);
 				})
 			.on('mousemove' , () => {
-				//this.tooltip.style('top' , (d3.event.pageY+this.tooltipOffset.y)+'px')
-				//	.style('left' , (d3.event.pageX+this.tooltipOffset.x)+'px');
+				this.tooltip.style('top' , (d3.event.pageY+this.tooltipOffset.y)+'px')
+					.style('left' , (d3.event.pageX+this.tooltipOffset.x)+'px');
 				})
 			.on('mouseout' , () => {
-				//this.tooltip.style('display' , 'none');
+				this.hideToolTip();
 				})
-			.on('click' , this.clicked);
+			.on('click' , (d) => {
+				this.clicked(d);
+			});
+
 	}
+
+	showToolTip(d){
+		this.tooltip.style('opacity' , .90)
+			.html(d.properties.name);
+	}
+
+	moveToolTip(){
+
+	}
+
+	hideToolTip(){
+		this.tooltip.style('opacity' , 0);
+	}
+
 	clicked(d) {
-		console.log(d)
-		var rect = document.getElementById('rect');
-		console.log(rect);
-		if (this.active.node() === this) return this.reset();
-		this.active.classed("active", false);
-		this.active = d3.select(d).classed("active", true);
-
-		//var bounds = this.path.bounds(d),
-		//	dx = bounds[1][0] - bounds[0][0],
-		//	dy = bounds[1][1] - bounds[0][1],
-		//	x = (bounds[0][0] + bounds[1][0]) / 2,
-		//	y = (bounds[0][1] + bounds[1][1]) / 2,
-		//	scale = .9 / Math.max(dx / width, dy / height),
-		//	translate = [width / 2 - scale * x, height / 2 - scale * y];
-
-		//this.features.transition()
-		//	.duration(750)
-		//	.style("stroke-width", 1.5 / scale + "px")
-		//	.attr("transform", "translate(" + translate + ")scale(" + scale + ")");
+		console.log(d);
+		if (this.active.data()[0] === d)  return this.reset();
+		this.active.classed("highlighted", false);
+		this.active = d3.selectAll('path')
+			.filter(function(i){return i['id'] == d.id })
+			.classed("highlighted" , true);
 	  }
 	reset() {
-		this.active.classed("active", false);
+		this.active.classed("highlighted", false);
 		this.active = d3.select(null);
-
-		this.features.transition()
-			.duration(750)
-			.style("stroke-width", "1.5px")
-			.attr("transform", "");
 	  }
 
 
