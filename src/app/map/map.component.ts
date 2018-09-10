@@ -25,6 +25,8 @@ export class MapComponent implements OnInit, OnChanges {
 	public active: any;
 	private features: any;
 	private featureCollection: any;
+	private zoom: any;
+	private view:any;
 
 	constructor(private jsonservice: JsonService) {
 		this.margin = { top: 20, bottom: 20, left: 20, right: 20};
@@ -38,6 +40,8 @@ export class MapComponent implements OnInit, OnChanges {
 		this.active = d3.select(null)
 		this.features;
 		this.featureCollection;
+		this.zoom;
+		this.view;
 
 
 		this.jsonservice.getData('assets/topojson/countries.json')
@@ -53,8 +57,10 @@ export class MapComponent implements OnInit, OnChanges {
 
 		this.world = data;
 
-		this.featureCollection = topojson.feature(this.world , this.world.objects.subunits);
-		console.log(this.featureCollection);
+		console.log(data);
+
+		this.featureCollection = topojson.feature(this.world , this.world.objects.collection);
+
 		this.projection = d3_projection.geoRobinson()
 			.rotate([-10, 0, 0])
 			.fitSize([this.width, this.height], this.featureCollection);
@@ -66,17 +72,23 @@ export class MapComponent implements OnInit, OnChanges {
 				.attr('class' , 'tooltip')
 				.style('opacity', 0);
 
+		this.zoom = d3.zoom()
+			.scaleExtent([1, 8])
+			.on("zoom", () => {
+				this.features.style("stroke-width", 1.5 / d3.event.transform.k + "px");
+				this.features.attr("transform", d3.event.transform);
+			});
+
 		this.svg = d3.select('app-map').append('svg')
 			.attr('width', '100%')
 			.attr('height', this.height)
+			.call(this.zoom);
 
-
-		this.svg.append('rect')
+		this.view = this.svg.append('rect')
     		.attr("class", "background")
 			.on("click", () => {
 				this.reset()}
 			);
-
 
 		this.features = this.svg.append('g')
 
@@ -126,7 +138,6 @@ export class MapComponent implements OnInit, OnChanges {
 		this.active.classed("highlighted", false);
 		this.active = d3.select(null);
 	  }
-
 
 	ngAfterViewInit(){
 
