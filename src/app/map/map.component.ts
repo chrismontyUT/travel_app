@@ -54,10 +54,7 @@ export class MapComponent implements OnInit, OnChanges {
 
 
 	setMap(data:Object){
-
 		this.world = data;
-
-		console.log(data);
 
 		this.featureCollection = topojson.feature(this.world , this.world.objects.collection);
 
@@ -115,7 +112,7 @@ export class MapComponent implements OnInit, OnChanges {
 
 	showToolTip(d){
 		this.tooltip.style('opacity' , .90)
-			.html(d.properties.name);
+			.html(d.properties.NAME);
 	}
 
 	moveToolTip(){
@@ -127,16 +124,37 @@ export class MapComponent implements OnInit, OnChanges {
 	}
 
 	clicked(d) {
-		console.log(d);
+		//highlight the clicked country
 		if (this.active.data()[0] === d)  return this.reset();
 		this.active.classed("highlighted", false);
 		this.active = d3.selectAll('path')
-			.filter(function(i){return i['id'] == d.id })
+			.filter(function(i){return i['properties']['ISO_A2'] == d.properties.ISO_A2})
 			.classed("highlighted" , true);
+
+		//zoom to country bounding box
+		var bounds = this.path.bounds(d),
+			dx = bounds[1][0] - bounds[0][0],
+			dy = bounds[1][1] - bounds[0][1],
+			x = (bounds[0][0] + bounds[1][0]) / 2,
+			y = (bounds[0][1] + bounds[1][1]) / 2,
+			scale = Math.max(1, Math.min(8, 0.9 / Math.max(dx / this.width, dy / this.height))),
+			translate = [this.width / 2 - scale * x, this.height / 2 - scale * y];
+
+		this.svg.transition()
+			.duration(750)
+			.call( this.zoom.transform, d3.zoomIdentity.translate(translate[0],translate[1]).scale(scale) ); // updated f
+
+
 	  }
 	reset() {
+		//remove highlighted color upon delecting
 		this.active.classed("highlighted", false);
 		this.active = d3.select(null);
+
+		//reset zoom
+		this.svg.transition()
+      		.duration(750)
+      		.call(this.zoom.transform, d3.zoomIdentity ); // updated for d3 v4
 	  }
 
 	ngAfterViewInit(){
