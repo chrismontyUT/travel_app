@@ -2,7 +2,7 @@ import { Component, OnInit , OnChanges, ViewChild, ElementRef, Input, ViewEncaps
 import * as d3 from 'd3';
 import * as d3_projection from 'd3-geo-projection';
 import * as topojson from 'topojson';
-import {JsonService} from '../json.service';
+import {JsonService} from '../services/json.service';
 
 @Component({
 	selector: 'app-map',
@@ -70,11 +70,11 @@ export class MapComponent implements OnInit, OnChanges {
 				.style('opacity', 0);
 
 		this.zoom = d3.zoom()
-			.scaleExtent([1, 8])
+			.scaleExtent([1, 50])
 			.on("zoom", () => {
 				this.features.style("stroke-width", 1.5 / d3.event.transform.k + "px");
 				this.features.attr("transform", d3.event.transform);
-			});
+			})
 
 		this.svg = d3.select('app-map').append('svg')
 			.attr('width', '100%')
@@ -85,7 +85,9 @@ export class MapComponent implements OnInit, OnChanges {
     		.attr("class", "background")
 			.on("click", () => {
 				this.reset()}
-			);
+			)
+			.on("dblclick.zoom", null);
+			;
 
 		this.features = this.svg.append('g')
 
@@ -112,7 +114,7 @@ export class MapComponent implements OnInit, OnChanges {
 
 	showToolTip(d){
 		this.tooltip.style('opacity' , .90)
-			.html(d.properties.NAME);
+			.html(d.properties.geonunit);
 	}
 
 	moveToolTip(){
@@ -128,7 +130,7 @@ export class MapComponent implements OnInit, OnChanges {
 		if (this.active.data()[0] === d)  return this.reset();
 		this.active.classed("highlighted", false);
 		this.active = d3.selectAll('path')
-			.filter(function(i){return i['properties']['ISO_A2'] == d.properties.ISO_A2})
+			.filter(function(i){return i['properties']['geonunit'] == d.properties.geonunit})
 			.classed("highlighted" , true);
 
 		//zoom to country bounding box

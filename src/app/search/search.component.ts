@@ -1,49 +1,35 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { PopUpService } from '../pop-up.service';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { Component, OnInit, HostBinding } from '@angular/core';
+import { SearchService } from '../services/search.service';
 
 
 @Component({
-  selector: 'app-search',
+	selector: 'app-search',
+	providers: [SearchService],
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent implements OnInit {
 
-  clickMessage: any;
-  otherclickMessage: any;
+	@HostBinding('class.is-open')
+	isOpen: boolean = false;
 
-  constructor (public thisDialogRef: MatDialogRef<SearchComponent>, 
-  @Inject(MAT_DIALOG_DATA) public data: string) {}
 
-  //constructor(protected popUpSvc:PopUpService){}
-    
-  //show$;
+  constructor (private SearchService: SearchService){
+
+	}
 
   ngOnInit() {
-    //this.show$ = this.popUpSvc.showPopUp$;
-  }
+		this.SearchService.change.subscribe(isOpen => {
+			this.isOpen = isOpen;
+			console.log(this.isOpen);
+		});
+	}
+
 
   onYesIKnow() {
-    this.thisDialogRef.close('Yes I Know');
+    console.log('Yes I Know');
   }
   onNoIDont() {
-    this.thisDialogRef.close('No I Dont');
+    console.log('No I Dont');
   }
-
-  //showPopUp() { 
-    //this.popUpSvc.showPopUp(); 
-    //this.otherclickMessage = "Hello2";
-    //console.log(this.otherclickMessage);
-  //}
-
-  //closePopUp() { 
-    //this.popUpSvc.closePopUp(); 
-  //}
-
-  //onNewSearchClick(){
-    //this.clickMessage = "Hello1";
-    //console.log(this.clickMessage);
-  //}
-
 }

@@ -1,9 +1,15 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-   <app-map-view></app-map-view>
-    <app-my-maps-view></app-my-maps-view>
-    <button mat-button (click)="openDialog()">New Search</button>
-    <span class="spacer"></span> 
+		<a routerLink="/Search" routerLinkActive="active">
+			<button mat-button>New Search</button>
+		</a>
+		<a routerLink="/MyMaps" routerLinkActive="active">
+			<button mat-button>My Maps</button>
+		</a>
+		<a routerLink="/Map" routerLinkActive="active">
+			<button mat-button>Map View</button>
+		</a>
+    <span class="spacer"></span>
     <app-save-search></app-save-search>
     <div class="btn-group" dropdown>
       <button mat-icon-button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle" aria-controls="dropdown-basic">
@@ -20,3 +26,5 @@
    </div>
   </mat-toolbar-row>
 </mat-toolbar>
+
+
