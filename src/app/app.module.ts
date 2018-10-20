@@ -9,36 +9,31 @@ import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule,
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { NavbarComponent } from './navbar/navbar.component';
-import { MapViewComponent } from './map-view/map-view.component';
 import { SearchComponent } from './search/search.component';
 import { ProfileComponent } from './profile/profile.component';
 import { SettingsComponent } from './settings/settings.component';
 import { MyMapsViewComponent } from './my-maps-view/my-maps-view.component';
 import { SaveSearchComponent } from './save-search/save-search.component';
 import { MapComponent } from './map/map.component';
-import { JsonService } from './json.service';
-import { PopUpService } from './pop-up.service';
-import { DialogDemoComponent } from './dialog-demo/dialog-demo.component';
-import { MyDialogComponent } from './my-dialog/my-dialog.component';
+import { JsonService } from './services/json.service';
+import { PopUpService } from './services/pop-up.service';
 import { MatDialogModule, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
+import { AppRoutingModule } from './/app-routing.module';
+import { Router } from '@angular/router';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    MapViewComponent,
     SearchComponent,
     ProfileComponent,
     SettingsComponent,
     MyMapsViewComponent,
     SaveSearchComponent,
     MapComponent,
-    DialogDemoComponent,
-    MyDialogComponent,
     ProgressBarComponent,
   ],
-  //entryComponents: [MyDialogComponent],
   entryComponents: [SearchComponent],
   imports: [
     BrowserModule,
@@ -55,8 +50,14 @@ import { ProgressBarComponent } from './progress-bar/progress-bar.component';
     TooltipModule.forRoot(),
 		BsDropdownModule.forRoot(),
     HttpClientModule,
+    AppRoutingModule,
   ],
   providers: [JsonService, PopUpService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+	constructor(router : Router){
+
+	}
+ }
