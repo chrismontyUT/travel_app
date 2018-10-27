@@ -1,28 +1,23 @@
-import { Component, OnInit, HostBinding } from '@angular/core';
-import { SearchService } from '../services/search.service';
-
+import { Component, OnInit} from '@angular/core';
+import {questionList , Question} from './questionsList';
 
 @Component({
 	selector: 'app-search',
-	providers: [SearchService],
+	providers: [],
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent implements OnInit {
 
-	@HostBinding('class.is-open')
-	isOpen: boolean = false;
+	questionList: Question[]
 
+  constructor (){
+				this.questionList = questionList;
+	};
 
-  constructor (private SearchService: SearchService){
-
-	}
 
   ngOnInit() {
-		this.SearchService.change.subscribe(isOpen => {
-			this.isOpen = isOpen;
-			console.log(this.isOpen);
-		});
+
 	}
 
 
@@ -31,5 +26,9 @@ export class SearchComponent implements OnInit {
   }
   onNoIDont() {
     console.log('No I Dont');
-  }
+	}
+	generateJson(){
+
+	}
+
 }
