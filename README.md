@@ -9,7 +9,7 @@ This repo contains both the Angular 6 front end and the NodeJS backend code
 
 1) Clone the repo onto your local machine
 
-2) Install Nodejs and Angular 6 onto your machine
+2) Install Nodejs and Angular CLI onto your machine
 
 3) Using git Bash (or whichever command line tool you use) run the command npm install -g
 
