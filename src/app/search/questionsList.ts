@@ -17,16 +17,16 @@ export class Question{
 export const questionList: Question[] = [
 	new Question(
 	'Where Are You Going?',
-	[	{answerTitle: 'North America' , imagePath: ''} ,
-	 	{answerTitle: 'South America' ,imagePath: ''} ,
-	 	{answerTitle: 'Central America', imagePath: ''},
-	  	{answerTitle: 'Caribbean', imagePath: ''},
-	 	{answerTitle: 'Africa' , imagePath: ''},
-	  	{answerTitle: 'Middle East' , imagePath: ''},
-	  	{answerTitle: 'Europe' , imagePath: ''},
-	  	{answerTitle: 'Asia' , imagePath: ''},
-	  	{answerTitle: 'Oceania' , 'imagePath': ''},
-	  	{answerTitle: 'Arctic/Antarctic',imagePath: ''}
+	[	{answerTitle: 'North America' , imagePath: '../../assets/images/regions/northAmerica.jpg'} ,
+	 	{answerTitle: 'South America' ,imagePath: '../../assets/images/regions/southAmerica.jpg'} ,
+	 	{answerTitle: 'Central America', imagePath: '../../assets/images/regions/centralAmerica.jpg'},
+	  	{answerTitle: 'Caribbean', imagePath: '../../assets/images/regions/caribbean.jpg'},
+	 	{answerTitle: 'Africa' , imagePath: '../../assets/images/regions/africa.jpg'},
+	  	{answerTitle: 'Middle East' , imagePath: '../../assets/images/regions/middleEast.jpg'},
+	  	{answerTitle: 'Europe' , imagePath: '../../assets/images/regions/europe.jpg'},
+	  	{answerTitle: 'Asia' , imagePath: '../../assets/images/regions/asia.jpg'},
+	  	{answerTitle: 'Oceania' , 'imagePath': '../../assets/images/regions/oceania.jpg'},
+	  	{answerTitle: 'Arctic/Antarctic',imagePath: '../../assets/images/regions/arctics.jpg'}
 	]
 	)/*,
 new Question(
@@ -44,9 +44,9 @@ new Question(
 	 	{answerTitle: 'Bottlenose Dolphin' ,imagePath: ''} ,
 	 	{answerTitle: 'Hammerhead Shark', imagePath: ''},
 	 	{answerTitle: 'Blue Whale', imagePath: ''},
-	 	{answerTitle: 'Sperm Whale' , imagePath: ''},
+	 	{answerTitle: 'Manta Ray' , imagePath: ''},
 	 	{answerTitle: 'Whale Shark' , imagePath: ''},
-	 	{answerTitle: 'Loggerhead Turtl' , imagePath: ''},
+	 	{answerTitle: 'Loggerhead Turtle' , imagePath: ''},
      	{answerTitle: 'Jellyfish' , imagePath: ''},
      	{answerTitle: 'Killer Whale' , imagePath: ''},
 	  	{answerTitle: 'Seal',imagePath: ''}

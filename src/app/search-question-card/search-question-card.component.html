@@ -1,9 +1,6 @@
-<mat-card>
+<mat-card [@cardState]="cardState">
   <mat-card-header>
     <mat-card-title>{{answer.answerTitle}}</mat-card-title>
   </mat-card-header>
-  <img mat-card-image src={{answer.imagePath}}>
-  <mat-card-content>
-    <p>Something pretty...</p>
-  </mat-card-content>
+  <img mat-card-image src={{answer.imagePath}} class="img-responsive">
 </mat-card>

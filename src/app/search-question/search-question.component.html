@@ -1,5 +1,7 @@
-<div fxLayout="row wrap" fxLayoutGap="55px" fxLayoutAlign="flex-start">
-  <ng-container *ngFor="let answer of answerList">
-    <app-search-question-card  [answer]="answer"></app-search-question-card>
-  </ng-container>
+<div class="question-container">
+	<div fxLayout="row wrap" fxLayoutGap="55px" fxLayoutAlign="center">
+		<ng-container *ngFor="let answer of answerList">
+			<app-search-question-card  [answer]="answer"></app-search-question-card>
+		</ng-container>
+	</div>
 </div>
