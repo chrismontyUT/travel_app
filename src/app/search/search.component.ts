@@ -4,31 +4,43 @@ import {questionList , Question} from './questionsList';
 @Component({
 	selector: 'app-search',
 	providers: [],
-  templateUrl: './search.component.html',
-  styleUrls: ['./search.component.scss']
+  	templateUrl: './search.component.html',
+  	styleUrls: ['./search.component.scss']
 })
 export class SearchComponent implements OnInit {
 
-	questionList: Question[]
+	questionList: Question[];
+	currentQuestionID: number = 1;
 
-  constructor (){
+	searchJson: any = {'Where Are You Going?' : [],
+						'What Type of Scuba Diving Would You Like To Do?' : [],
+						'What Animals Would You Like to See?': []}
+
+  	constructor (){
 				this.questionList = questionList;
 	};
 
 
-  ngOnInit() {
+  	ngOnInit() {
 
 	}
 
-
-  onYesIKnow() {
-    console.log('Yes I Know');
-  }
-  onNoIDont() {
-    console.log('No I Dont');
+	incrementCurrentQuestionID(){
+		if(this.currentQuestionID == 3){
+			return;
+		}
+		this.currentQuestionID += 1;
 	}
-	generateJson(){
 
+	decrementCurrentQuestionID(){
+		if(this.currentQuestionID == 1){
+			return;
+		}
+		this.currentQuestionID -= 1
+	}
+
+	generateJson(questionResult){
+			console.log(questionResult);
 	}
 
 }

@@ -1,8 +1,14 @@
 <body>
-	<h1>Search For Scuba Sites!!!</h1>
-	<p> Question List</p>
-	<app-search-question *ngFor="let Question of questionList"
-		[questionTitle]="Question.questionTitle"
-		[answerList]="Question.answerList">
-	</app-search-question>
+	<div class="wrapper">
+		<ng-container  *ngFor="let Question of questionList">
+			<app-search-question id="question" *ngIf="currentQuestionID == Question.questionID"
+				[questionTitle]="Question.questionTitle"
+				[answerList]="Question.answerList"
+				(questionResult)='generateJson($event)'>
+			</app-search-question>
+		</ng-container>
+		<button (click)="decrementCurrentQuestionID($event)" id="previous-button" mat-raised-button>Previous</button>
+		<button (click)="incrementCurrentQuestionID($event)" id="next-button" mat-raised-button>NEXT</button>
+	</div>
 </body>
+

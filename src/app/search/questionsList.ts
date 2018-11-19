@@ -4,18 +4,20 @@ type answer = {
 
 }
 export class Question{
+	questionID: number;
 	questionTitle: string;
 	answerList: answer[];
 
-	constructor(questionTitle:string , answerList:answer[]){
+	constructor(questionID: number , questionTitle:string , answerList:answer[]){
+		this.questionID = questionID;
 		this.questionTitle = questionTitle;
 		this.answerList = answerList;
-
 	}
 }
 
 export const questionList: Question[] = [
 	new Question(
+	1,
 	'Where Are You Going?',
 	[	{answerTitle: 'North America' , imagePath: '../../assets/images/regions/northAmerica.jpg'} ,
 	 	{answerTitle: 'South America' ,imagePath: '../../assets/images/regions/southAmerica.jpg'} ,
@@ -25,11 +27,12 @@ export const questionList: Question[] = [
 	  	{answerTitle: 'Middle East' , imagePath: '../../assets/images/regions/middleEast.jpg'},
 	  	{answerTitle: 'Europe' , imagePath: '../../assets/images/regions/europe.jpg'},
 	  	{answerTitle: 'Asia' , imagePath: '../../assets/images/regions/asia.jpg'},
-	  	{answerTitle: 'Oceania' , 'imagePath': '../../assets/images/regions/oceania.jpg'},
+	  	{answerTitle: 'Oceania' , imagePath: '../../assets/images/regions/oceania.jpg'},
 	  	{answerTitle: 'Arctic/Antarctic',imagePath: '../../assets/images/regions/arctics.jpg'}
 	]
-	)/*,
+	),
 new Question(
+	2,
 	'What Type of Scuba Diving Would You Like To Do?',
 	[	{answerTitle: 'Open Water Diving', imagePath: ''},
 		{answerTitle: 'Coral Reef Diving', imagePath: ''},
@@ -39,6 +42,7 @@ new Question(
 	]
 ),
 new Question(
+	3,
 	'What Animals Would You Like to See?',
 	[	{answerTitle: 'Great White Shark' , imagePath: ''} ,
 	 	{answerTitle: 'Bottlenose Dolphin' ,imagePath: ''} ,
@@ -51,4 +55,4 @@ new Question(
      	{answerTitle: 'Killer Whale' , imagePath: ''},
 	  	{answerTitle: 'Seal',imagePath: ''}
 	]
-)*/]
+)]

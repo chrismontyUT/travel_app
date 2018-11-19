@@ -1,12 +1,11 @@
 //import {} from
 
-export class searchQuestion{
+export class searchQuestionResults{
 
 	title: string;
-	answerList: any;
+	answerList: Array<string> = [];
 
-	constructor(title:string , answerList:any){
-		this.title 		= title;
-		this.answerList = answerList;
+	constructor(title:string){
+		this.title = title;
 	}
 }
