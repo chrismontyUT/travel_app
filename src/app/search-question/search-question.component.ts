@@ -23,13 +23,15 @@ export class SearchQuestionComponent implements OnInit {
 			this.questionResultsObject = new searchQuestionResults(this.questionTitle);
 	}
 
-	displayAnswer(answerClicked){
+	// This method saves/removes each answer title to an array when it is clicked
+	saveAnswer(answerClicked){
 		this.questionResultsObject.answerList.indexOf(answerClicked) === -1 ?
 								this.questionResultsObject.answerList.push(answerClicked) :			//push the new selection into the array
 								this.questionResultsObject.answerList.splice(this.questionResultsObject.answerList.indexOf(answerClicked) , 1); //splice the selection from the array if it exists
+	}
 
-		this.questionResult.emit(this.questionResultsObject);
-
+	reportAnswers(){
+				this.questionResult.emit(this.questionResultsObject);
 	}
 
 }

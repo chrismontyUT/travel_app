@@ -17,7 +17,7 @@ export class SearchComponent implements OnInit {
 						'What Animals Would You Like to See?': []}
 
   	constructor (){
-				this.questionList = questionList;
+		this.questionList = questionList;
 	};
 
 

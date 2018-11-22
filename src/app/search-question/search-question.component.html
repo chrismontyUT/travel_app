@@ -3,7 +3,7 @@
 		<ng-container *ngFor="let answer of answerList">
 			<app-search-question-card
 				[answer]="answer"
-				(answerClicked)='displayAnswer($event)'>
+				(answerClicked)='saveAnswer($event)'>
 			</app-search-question-card>
 		</ng-container>
 	</div>
