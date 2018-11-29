@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule,
@@ -21,6 +22,8 @@ import { MatDialogModule, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angu
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { Router } from '@angular/router';
+import { SearchQuestionComponent } from './search-question/search-question.component';
+import { SearchQuestionCardComponent } from './search-question-card/search-question-card.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +36,8 @@ import { Router } from '@angular/router';
     SaveSearchComponent,
     MapComponent,
     ProgressBarComponent,
+    SearchQuestionComponent,
+    SearchQuestionCardComponent,
   ],
   entryComponents: [SearchComponent],
   imports: [
@@ -51,6 +56,7 @@ import { Router } from '@angular/router';
 		BsDropdownModule.forRoot(),
     HttpClientModule,
     AppRoutingModule,
+    FlexLayoutModule
   ],
   providers: [JsonService, PopUpService],
   bootstrap: [AppComponent]

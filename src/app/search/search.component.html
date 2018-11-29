@@ -1,18 +1,14 @@
-<div>
-  <h2 mat-dialog-title>New Search</h2>
-  <hr>
-  <mat-dialog-content class="question">
-    Do you know where you are going on your vacation?
-    <br>
-    <br>
-    <strong>{{data}}</strong>
-  </mat-dialog-content>
-  <hr>
-  <mat-dialog-actions id="container">
-    <button mat-raised-button (click)="onYesIKnow()" class="answer">Yes I know</button>
-    <button mat-raised-button (click)="onNoIDont()" class="answer">No I don't know yet</button>
-  </mat-dialog-actions>
-  <mat-dialog-content>
-  <app-progress-bar></app-progress-bar>
-</mat-dialog-content>
-</div>
+<body>
+	<div class="wrapper">
+		<ng-container  *ngFor="let Question of questionList">
+			<app-search-question id="question" *ngIf="currentQuestionID == Question.questionID"
+				[questionTitle]="Question.questionTitle"
+				[answerList]="Question.answerList"
+				(questionResult)='generateJson($event)'>
+			</app-search-question>
+		</ng-container>
+		<button *ngIf="currentQuestionID > 1" (click)="decrementCurrentQuestionID($event)" id="previous-button" mat-raised-button>Previous</button>
+		<button *ngIf="currentQuestionID < 3" (click)="incrementCurrentQuestionID($event)" id="next-button" mat-raised-button>NEXT</button>
+	</div>
+</body>
+

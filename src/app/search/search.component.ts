@@ -1,35 +1,46 @@
-import { Component, OnInit, HostBinding } from '@angular/core';
-import { SearchService } from '../services/search.service';
-
+import { Component, OnInit} from '@angular/core';
+import {questionList , Question} from './questionsList';
 
 @Component({
 	selector: 'app-search',
-	providers: [SearchService],
-  templateUrl: './search.component.html',
-  styleUrls: ['./search.component.scss']
+	providers: [],
+  	templateUrl: './search.component.html',
+  	styleUrls: ['./search.component.scss']
 })
 export class SearchComponent implements OnInit {
 
-	@HostBinding('class.is-open')
-	isOpen: boolean = false;
+	questionList: Question[];
+	currentQuestionID: number = 1;
+
+	searchJson: any = {'Where Are You Going?' : [],
+						'What Type of Scuba Diving Would You Like To Do?' : [],
+						'What Animals Would You Like to See?': []}
+
+  	constructor (){
+		this.questionList = questionList;
+	};
 
 
-  constructor (private SearchService: SearchService){
+  	ngOnInit() {
 
 	}
 
-  ngOnInit() {
-		this.SearchService.change.subscribe(isOpen => {
-			this.isOpen = isOpen;
-			console.log(this.isOpen);
-		});
+	incrementCurrentQuestionID(){
+		if(this.currentQuestionID == 3){
+			return;
+		}
+		this.currentQuestionID += 1;
 	}
 
+	decrementCurrentQuestionID(){
+		if(this.currentQuestionID == 1){
+			return;
+		}
+		this.currentQuestionID -= 1
+	}
 
-  onYesIKnow() {
-    console.log('Yes I Know');
-  }
-  onNoIDont() {
-    console.log('No I Dont');
-  }
+	generateJson(questionResult){
+			console.log(questionResult);
+	}
+
 }

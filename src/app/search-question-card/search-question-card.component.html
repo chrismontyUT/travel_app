@@ -1,0 +1,8 @@
+<button mat-button [@cardState]="cardState" (click)="cardSelected()">
+	<mat-card >
+		<mat-card-header>
+			<mat-card-title>{{answer.answerTitle}}</mat-card-title>
+		</mat-card-header>
+		<img mat-card-image src={{answer.imagePath}} class="img-responsive">
+	</mat-card>
+</button>
