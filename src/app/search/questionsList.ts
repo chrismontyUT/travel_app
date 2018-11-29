@@ -34,25 +34,25 @@ export const questionList: Question[] = [
 new Question(
 	2,
 	'What Type of Scuba Diving Would You Like To Do?',
-	[	{answerTitle: 'Open Water Diving', imagePath: ''},
-		{answerTitle: 'Coral Reef Diving', imagePath: ''},
+	[	{answerTitle: 'Open Water Diving', imagePath: '../../assets/images/scubatypes/openOcean.jpg'},
+		{answerTitle: 'Coral Reef Diving', imagePath: '../../assets/images/scubatypes/reef.jpg'},
 		{answerTitle: 'Ice Diving' , imagePath: '../../assets/images/scubatypes/iceDive.jpg'},
-		{answerTitle: 'Cave Diving', imagePath: ''},
-		{answerTitle: 'Wreck Diving', imagePath: ''}
+		{answerTitle: 'Cave Diving', imagePath: '../../assets/images/scubatypes/caveDive.jpg'},
+		{answerTitle: 'Wreck Diving', imagePath: '../../assets/images/scubatypes/wreckDive.jpg'}
 	]
 ),
 new Question(
 	3,
 	'What Animals Would You Like to See?',
-	[	{answerTitle: 'Great White Shark' , imagePath: ''} ,
-	 	{answerTitle: 'Bottlenose Dolphin' ,imagePath: ''} ,
-	 	{answerTitle: 'Hammerhead Shark', imagePath: ''},
-	 	{answerTitle: 'Blue Whale', imagePath: ''},
-	 	{answerTitle: 'Manta Ray' , imagePath: ''},
-	 	{answerTitle: 'Whale Shark' , imagePath: ''},
-	 	{answerTitle: 'Loggerhead Turtle' , imagePath: ''},
-     	{answerTitle: 'Jellyfish' , imagePath: ''},
-     	{answerTitle: 'Killer Whale' , imagePath: ''},
-	  	{answerTitle: 'Seal',imagePath: ''}
+	[	{answerTitle: 'Great White Shark' , imagePath: '../../assets/images/animals/greatWhite.jpg'} ,
+	 	{answerTitle: 'Bottlenose Dolphin' ,imagePath: '../../assets/images/animals/dolphin.jpg'} ,
+	 	{answerTitle: 'Hammerhead Shark', imagePath: '../../assets/images/animals/hammerHead.jpg'},
+	 	{answerTitle: 'Humpback Whale', imagePath: '../../assets/images/animals/humpBack.jpg'},
+	 	{answerTitle: 'Manta Ray' , imagePath: '../../assets/images/animals/mantaRay.jpg'},
+	 	{answerTitle: 'Whale Shark' , imagePath: '../../assets/images/animals/whaleShark.jpg'},
+	 	{answerTitle: 'Loggerhead Turtle' , imagePath: '../../assets/images/animals/loggerHead.jpg'},
+     	{answerTitle: 'Jellyfish' , imagePath: '../../assets/images/animals/jellyFish.jpg'},
+     	{answerTitle: 'Killer Whale' , imagePath: '../../assets/images/animals/orca.jpg'},
+	  	{answerTitle: 'Seal',imagePath: '../../assets/images/animals/seal.jpg'}
 	]
 )]

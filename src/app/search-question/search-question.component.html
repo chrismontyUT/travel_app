@@ -1,7 +1,7 @@
 <div class="question-container">
-	<div fxLayout="row wrap" fxLayoutGap="55px" fxLayoutAlign="center">
+	<div fxLayout="row wrap" fxLayoutGap=".5%" fxLayoutAlign="center">
 		<ng-container *ngFor="let answer of answerList">
-			<app-search-question-card
+			<app-search-question-card fxFlex="18%"
 				[answer]="answer"
 				(answerClicked)='saveAnswer($event)'>
 			</app-search-question-card>

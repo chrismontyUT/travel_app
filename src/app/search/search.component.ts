@@ -1,5 +1,6 @@
-import { Component, OnInit} from '@angular/core';
-import {questionList , Question} from './questionsList';
+import { Component, OnInit , AfterViewInit, QueryList, ViewChildren} from '@angular/core';
+import { questionList , Question} from './questionsList';
+import { SearchQuestionComponent } from '../search-question/search-question.component'
 
 @Component({
 	selector: 'app-search',
@@ -7,14 +8,23 @@ import {questionList , Question} from './questionsList';
   	templateUrl: './search.component.html',
   	styleUrls: ['./search.component.scss']
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent implements OnInit, AfterViewInit {
 
+	@ViewChildren(SearchQuestionComponent) searchQuestionChildren: QueryList<SearchQuestionComponent>;
 	questionList: Question[];
 	currentQuestionID: number = 1;
 
-	searchJson: any = {'Where Are You Going?' : [],
-						'What Type of Scuba Diving Would You Like To Do?' : [],
-						'What Animals Would You Like to See?': []}
+	searchJson: any =  [
+						{ 'id' : '1',
+						'answers' : []
+						},
+						{ 'id' :'2',
+						 'answers' : []
+						},
+						{ 'id':'3',
+						 'answers' : []
+						}
+	];
 
   	constructor (){
 		this.questionList = questionList;
@@ -23,6 +33,9 @@ export class SearchComponent implements OnInit {
 
   	ngOnInit() {
 
+	}
+
+	ngAfterViewInit(){
 	}
 
 	incrementCurrentQuestionID(){
@@ -37,10 +50,22 @@ export class SearchComponent implements OnInit {
 			return;
 		}
 		this.currentQuestionID -= 1
+	};
+
+	getSelectedList(){
+		this.searchJson.forEach(element => {
+			if(element.id == this.currentQuestionID){
+				return element.answers;
+			};
+		});
 	}
 
 	generateJson(questionResult){
-			console.log(questionResult);
-	}
+		this.searchJson.forEach(element => {
+			if(element.id == questionResult.questionID){
+				element.answers = questionResult.answerList;
+			};
+		});
+	};
 
 }

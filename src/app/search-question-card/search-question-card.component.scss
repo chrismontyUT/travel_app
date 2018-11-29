@@ -5,7 +5,11 @@ mat-card{
 }
 
 mat-card img{
-	object-fit: cover; /*this makes de image in src fit to the size of specified below*/
-	width: 135%; /* Here you can use wherever you want to specify the width and also the height of the <img>*/
+	object-fit: cover;
+	width: 135%;
 	height: 80%;
-  }
+}
+
+.active{
+	background-color: aqua;
+}
