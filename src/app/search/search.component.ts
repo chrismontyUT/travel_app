@@ -1,14 +1,35 @@
-import { Component, OnInit , AfterViewInit, QueryList, ViewChildren} from '@angular/core';
+import { Component, ViewChildren, QueryList, OnChanges} from '@angular/core';
 import { questionList , Question} from './questionsList';
 import { SearchQuestionComponent } from '../search-question/search-question.component'
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
 	selector: 'app-search',
 	providers: [],
   	templateUrl: './search.component.html',
-  	styleUrls: ['./search.component.scss']
+	styleUrls: ['./search.component.scss'],
+	animations: [
+		trigger('slideIncrement', [
+		  transition(':enter', [
+			style({transform: 'translateX(100%)'}),
+			animate('1000ms ease-in', style({transform: 'translateX(0%)'}))
+		  ]),
+		  transition(':leave', [
+			animate('1ms ease-in', style({transform: 'translateX(-100%)'}))
+		  ])
+		]),
+		/*trigger('slideDecrement', [
+			transition(':enter', [
+			  style({transform: 'translateX(-100%)'}),
+			  animate('200ms ease-in', style({transform: 'translateX(0%)'}))
+			]),
+			transition(':leave', [
+			  animate('200ms ease-in', style({transform: 'translateX(100%)'}))
+			])
+		  ])*/
+	  ]
 })
-export class SearchComponent implements OnInit, AfterViewInit {
+export class SearchComponent implements OnChanges {
 
 	@ViewChildren(SearchQuestionComponent) searchQuestionChildren: QueryList<SearchQuestionComponent>;
 	questionList: Question[];
@@ -30,12 +51,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
 		this.questionList = questionList;
 	};
 
-
-  	ngOnInit() {
-
-	}
-
-	ngAfterViewInit(){
+	ngOnChanges(){
 	}
 
 	incrementCurrentQuestionID(){
@@ -43,6 +59,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
 			return;
 		}
 		this.currentQuestionID += 1;
+		console.log(this.searchJson);
 	}
 
 	decrementCurrentQuestionID(){
@@ -50,11 +67,24 @@ export class SearchComponent implements OnInit, AfterViewInit {
 			return;
 		}
 		this.currentQuestionID -= 1
+		console.log(this.searchJson);
+
 	};
 
-	getSelectedList(){
+	getAnswersFromComponent(){
+		console.log(this.searchQuestionChildren.last.questionResultsObject.answerList);
+		this.searchJson.forEach(element => {
+			if(element.id == this.searchQuestionChildren.last.questionResultsObject.questionID){
+				element.answers = this.searchQuestionChildren.last.questionResultsObject.answerList;
+			};
+		});
+		console.log(this.searchJson);
+	}
+
+	getSelectedListToRecreateComponent(){
 		this.searchJson.forEach(element => {
 			if(element.id == this.currentQuestionID){
+				console.log(element.answers);
 				return element.answers;
 			};
 		});

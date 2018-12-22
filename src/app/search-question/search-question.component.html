@@ -1,9 +1,10 @@
 <div class="question-container">
+	<header class="title">{{questionTitle}}</header>
 	<div fxLayout="row wrap" fxLayoutGap=".5%" fxLayoutAlign="center">
 		<ng-container *ngFor="let answer of answerList">
 			<app-search-question-card fxFlex="18%"
 				[answer]="answer"
-				(answerClicked)='saveAnswer($event)'>
+				(answerClicked)="saveAnswer($event)">
 			</app-search-question-card>
 		</ng-container>
 	</div>

@@ -1,21 +1,13 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class SearchService {
 
-	isOpen: boolean = false;
-
-  @Output() change: EventEmitter<boolean> = new EventEmitter();
-
-	constructor() { }
-
-
-  toggle() {
-		this.isOpen = !this.isOpen;
-		this.change.emit(this.isOpen);
-  }
-
+	constructor(private http: HttpClient) { }
 
 }

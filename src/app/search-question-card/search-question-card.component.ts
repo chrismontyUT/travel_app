@@ -1,5 +1,4 @@
 import { Component, OnInit , Input, Output , HostListener , EventEmitter} from '@angular/core';
-import {searchQuestionCard} from './search-question-card.model';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import {answer} from '../shared/utils'
 
@@ -21,8 +20,10 @@ export class SearchQuestionCardComponent implements OnInit {
 
 	isRaised: boolean = false;
 	cardState: string;
+	clicked: boolean = false;
 
-  	@Input() answer: answer;
+	@Input() answer: answer;
+	@Input() alreadyClicked: boolean;
 	@Output() answerClicked = new EventEmitter();
 
   	@HostListener('mouseenter')
@@ -41,9 +42,13 @@ export class SearchQuestionCardComponent implements OnInit {
 	 }
 
 	ngOnInit() {
+		if(this.alreadyClicked){
+			this.clicked = true;
+		};
 	}
 
-	cardSelected(){
+	cardSelected(event){
+		this.clicked = !this.clicked;
 		this.answerClicked.emit(this.answer.answerTitle);
 	}
 

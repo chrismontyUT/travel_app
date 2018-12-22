@@ -11,7 +11,7 @@ export class SearchQuestionComponent implements OnInit, OnDestroy {
 
 	@Input('questionTitle') questionTitle: string;
 	@Input('questionID') questionID: number;
-	@Input('selected') selected: string[];
+	//@Input('selected') selected: string[];
 	@Input() answerList: answer[];
 
 	@Output() questionResult = new EventEmitter();
@@ -36,7 +36,11 @@ export class SearchQuestionComponent implements OnInit, OnDestroy {
 	}
 
 	reportAnswers(){
-				this.questionResult.emit(this.questionResultsObject);
+		this.questionResult.emit(this.questionResultsObject);
+	}
+
+	isAlreadyClicked(answerTitle: string){
+		this.questionResultsObject.answerList.indexOf(answerTitle) === -1 ? false : true;
 	}
 
 }
