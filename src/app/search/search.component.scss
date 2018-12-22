@@ -1,26 +1,12 @@
-
-#container{
-	text-align: center;
-	display: inline-block;
-	position: absolute;
-  }
+.search-page{
+	height: 100%;
+}
 
 .wrapper{
 	  position: relative;
   }
 
-#previous-button{
-	position: absolute;
-	top: 0;
-	left: 0;
-}
 
-#next-button{
-	position: absolute;
-	top:0;
-	right:0;
-}
-
-#question{
-	position: absolute;
+.question{
+	height: 100%;
 }

@@ -1,14 +1,18 @@
-<body>
-	<div class="wrapper">
-		<ng-container  *ngFor="let Question of questionList">
-			<app-search-question id="question" *ngIf="currentQuestionID == Question.questionID"
-				[questionTitle]="Question.questionTitle"
-				[answerList]="Question.answerList"
-				(questionResult)='generateJson($event)'>
-			</app-search-question>
-		</ng-container>
-		<button *ngIf="currentQuestionID > 1" (click)="decrementCurrentQuestionID($event)" id="previous-button" mat-raised-button>Previous</button>
-		<button *ngIf="currentQuestionID < 3" (click)="incrementCurrentQuestionID($event)" id="next-button" mat-raised-button>NEXT</button>
+<div class="search-page" fxLayout="row" fxLayoutAlign="space-between center">
+	<div fxFlex="6%">
+		<button *ngIf="currentQuestionID > 1" (click)="decrementCurrentQuestionID($event)" mat-raised-button >Previous</button>
 	</div>
-</body>
+	<ng-container  *ngFor="let Question of questionList">
+		<app-search-question class="question" *ngIf="currentQuestionID == Question.questionID" [@slideIncrement] fxFlex="85%"
+			[questionTitle]="Question.questionTitle"
+			[questionID]="Question.questionID"
+			[answerList]="Question.answerList"
+			(questionResult)='generateJson($event)'>
+		</app-search-question>
+	</ng-container>
+	<div fxFlex="6%">
+		<button flex *ngIf="currentQuestionID < 3" (click)="incrementCurrentQuestionID($event)" mat-raised-button >NEXT</button>
+		<button flex *ngIf="currentQuestionID == 3" (click)="getAnswersFromComponent()" mat-raised-button >FINISH</button>
+	</div>
+</div>
 

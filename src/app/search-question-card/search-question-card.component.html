@@ -1,5 +1,5 @@
-<button mat-button [@cardState]="cardState" (click)="cardSelected()">
-	<mat-card >
+<button mat-button [class.question-clicked]="clicked" [@cardState]="cardState" (click)="cardSelected($event)">
+	<mat-card>
 		<mat-card-header>
 			<mat-card-title>{{answer.answerTitle}}</mat-card-title>
 		</mat-card-header>

@@ -2,10 +2,10 @@
 
 export class searchQuestionResults{
 
-	title: string;
+	questionID: number;
 	answerList: Array<string> = [];
 
-	constructor(title:string){
-		this.title = title;
+	constructor(questionID: number){
+		this.questionID = questionID;
 	}
 }
