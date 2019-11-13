@@ -2,21 +2,22 @@ import { Component, OnInit , OnChanges, ViewChild, ElementRef, Input, ViewEncaps
 import * as d3 from 'd3';
 import * as d3_projection from 'd3-geo-projection';
 import * as topojson from 'topojson';
-import {JsonService} from '../services/json.service';
+import { JsonService } from '../services/json.service';
+import { MapService } from "../services/map.service";
+import { iCountrySiteCount } from "../common/models/countrySiteCount";
 
 @Component({
 	selector: 'app-map',
-	providers: [JsonService],
+	providers: [JsonService, MapService],
 	templateUrl: './map.component.html',
 	styleUrls: ['./map.component.scss'],
 	encapsulation: ViewEncapsulation.None
 	})
 export class MapComponent implements OnInit, OnChanges {
-	@Input() private mapdata: Array<any>;
 	private margin: any;
 	private svg: any;
-	private width: number;
-	private height: number;
+	private readonly width: number;
+	private readonly height: number;
 	private projection: any;
 	private path: any;
 	private world: any;
@@ -28,36 +29,22 @@ export class MapComponent implements OnInit, OnChanges {
 	private zoom: any;
 	private view:any;
 
-	constructor(private jsonservice: JsonService) {
+	constructor(private jsonService: JsonService, private mapService: MapService) {
 		this.margin = { top: 20, bottom: 20, left: 20, right: 20};
-		this.svg;
 		this.width = window.innerWidth;
 		this.height = window.innerHeight  * .9165;
-		this.projection;
-		this.path;
 		this.tooltipOffset = {x: 15 , y: -35};
-		this.tooltip;
-		this.active = d3.select(null)
-		this.features;
-		this.featureCollection;
-		this.zoom;
-		this.view;
-
-
-		this.jsonservice.getData('assets/topojson/countries.json')
-			.subscribe(data => this.setMap(data) , err => console.log(err));
+		this.active = d3.select(null);
 	}
 
 	ngOnInit() {
-
+		this.jsonService.getData('assets/topojson/countries.json')
+			.subscribe(data => this.setMap(data) , err => console.log(err));
 	}
-
 
 	setMap(data:Object){
 		this.world = data;
-
 		this.featureCollection = topojson.feature(this.world , this.world.objects.collection);
-
 		this.projection = d3_projection.geoRobinson()
 			.rotate([-10, 0, 0])
 			.fitSize([this.width, this.height], this.featureCollection);
@@ -74,7 +61,7 @@ export class MapComponent implements OnInit, OnChanges {
 			.on("zoom", () => {
 				this.features.style("stroke-width", 1.5 / d3.event.transform.k + "px");
 				this.features.attr("transform", d3.event.transform);
-			})
+			});
 
 		this.svg = d3.select('app-map').append('svg')
 			.attr('width', '100%')
@@ -84,12 +71,11 @@ export class MapComponent implements OnInit, OnChanges {
 		this.view = this.svg.append('rect')
     		.attr("class", "background")
 			.on("click", () => {
-				this.reset()}
+				this.resetMap()}
 			)
 			.on("dblclick.zoom", null);
-			;
 
-		this.features = this.svg.append('g')
+		this.features = this.svg.append('g');
 
 		this.features.selectAll('path')
 			.data(this.featureCollection.features)
@@ -117,24 +103,20 @@ export class MapComponent implements OnInit, OnChanges {
 			.html(d.properties.geonunit);
 	}
 
-	moveToolTip(){
-
-	}
-
 	hideToolTip(){
 		this.tooltip.style('opacity' , 0);
 	}
 
 	clicked(d) {
 		//highlight the clicked country
-		if (this.active.data()[0] === d)  return this.reset();
+		if (this.active.data()[0] === d)  return this.resetMap();
 		this.active.classed("highlighted", false);
 		this.active = d3.selectAll('path')
 			.filter(function(i){return i['properties']['geonunit'] == d.properties.geonunit})
 			.classed("highlighted" , true);
 
 		//zoom to country bounding box
-		var bounds = this.path.bounds(d),
+		let bounds = this.path.bounds(d),
 			dx = bounds[1][0] - bounds[0][0],
 			dy = bounds[1][1] - bounds[0][1],
 			x = (bounds[0][0] + bounds[1][0]) / 2,
@@ -145,11 +127,10 @@ export class MapComponent implements OnInit, OnChanges {
 		this.svg.transition()
 			.duration(750)
 			.call( this.zoom.transform, d3.zoomIdentity.translate(translate[0],translate[1]).scale(scale) ); // updated f
-
-
 	  }
-	reset() {
-		//remove highlighted color upon delecting
+	  
+	resetMap() {
+		//remove highlighted color upon deselecting
 		this.active.classed("highlighted", false);
 		this.active = d3.select(null);
 
@@ -158,6 +139,15 @@ export class MapComponent implements OnInit, OnChanges {
       		.duration(750)
       		.call(this.zoom.transform, d3.zoomIdentity ); // updated for d3 v4
 	  }
+
+	getSiteCounts(): void {
+		this.mapService.getCountrySiteCount()
+			.subscribe(sites => this.displaySites(sites) , err => console.log(err))
+	}
+
+	displaySites(sites){
+
+	}
 
 	ngAfterViewInit(){
 

@@ -66,7 +66,7 @@ export class SearchComponent implements OnChanges {
 		if(this.currentQuestionID == 1){
 			return;
 		}
-		this.currentQuestionID -= 1
+		this.currentQuestionID -= 1;
 		console.log(this.searchJson);
 
 	};
@@ -76,7 +76,7 @@ export class SearchComponent implements OnChanges {
 		this.searchJson.forEach(element => {
 			if(element.id == this.searchQuestionChildren.last.questionResultsObject.questionID){
 				element.answers = this.searchQuestionChildren.last.questionResultsObject.answerList;
-			};
+			}
 		});
 		console.log(this.searchJson);
 	}
@@ -86,7 +86,7 @@ export class SearchComponent implements OnChanges {
 			if(element.id == this.currentQuestionID){
 				console.log(element.answers);
 				return element.answers;
-			};
+			}
 		});
 	}
 
@@ -94,8 +94,11 @@ export class SearchComponent implements OnChanges {
 		this.searchJson.forEach(element => {
 			if(element.id == questionResult.questionID){
 				element.answers = questionResult.answerList;
-			};
+			}
 		});
 	};
 
+	goToMapView(){
+
+	}
 }
