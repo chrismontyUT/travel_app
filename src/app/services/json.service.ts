@@ -10,8 +10,8 @@ export class JsonService {
 	constructor(private http: HttpClient) { }
 
 	getData(url:string){
-    console.log(url); 
-    return this.http.get(url, {responseType: 'json'})
+        console.log(url);
+        return this.http.get(url, {responseType: 'json'})
   }
 
 }
