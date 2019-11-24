@@ -1,6 +1,6 @@
 app-map {
 	display: block;
-	height: 91.65%;
+	height: 100%;
 	width: 100%;
 }
 
@@ -57,3 +57,17 @@ div.tooltip:after {
 	position: absolute;
 	text-align: center;
   }
+
+mat-sidenav-container,
+mat-sidenav-content,
+mat-sidenav {
+	height: 100%;
+}
+
+mat-sidenav {
+	width: 450px;
+}
+
+.mat-drawer-backdrop.mat-drawer-shown{
+	display: none;
+}

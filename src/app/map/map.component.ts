@@ -13,7 +13,7 @@ import { iCountrySiteCount } from "../common/models/countrySiteCount";
 	styleUrls: ['./map.component.scss'],
 	encapsulation: ViewEncapsulation.None
 	})
-export class MapComponent implements OnInit, OnChanges {
+export class MapComponent implements OnInit {
 	private margin: any;
 	private svg: any;
 	private readonly width: number;
@@ -28,6 +28,7 @@ export class MapComponent implements OnInit, OnChanges {
 	private featureCollection: any;
 	private zoom: any;
 	private view:any;
+	private sidebarActive: boolean;
 
 	constructor(private jsonService: JsonService, private mapService: MapService) {
 		this.margin = { top: 20, bottom: 20, left: 20, right: 20};
@@ -35,11 +36,15 @@ export class MapComponent implements OnInit, OnChanges {
 		this.height = window.innerHeight  * .9165;
 		this.tooltipOffset = {x: 15 , y: -35};
 		this.active = d3.select(null);
+		this.sidebarActive = false;
 	}
 
 	ngOnInit() {
 		this.jsonService.getData('assets/topojson/countries.json')
 			.subscribe(data => this.setMap(data) , err => console.log(err));
+
+		this.mapService.getCountrySiteCount()
+			.subscribe(sites => this.displaySites(sites) , err => console.log(err));
 	}
 
 	setMap(data:Object){
@@ -52,7 +57,7 @@ export class MapComponent implements OnInit, OnChanges {
 		this.path = d3.geoPath()
 			.projection(this.projection);
 
-		this.tooltip = d3.select('app-map').append('div')
+		this.tooltip = d3.select('mat-sidenav-content').append('div')
 				.attr('class' , 'tooltip')
 				.style('opacity', 0);
 
@@ -63,7 +68,7 @@ export class MapComponent implements OnInit, OnChanges {
 				this.features.attr("transform", d3.event.transform);
 			});
 
-		this.svg = d3.select('app-map').append('svg')
+		this.svg = d3.select('mat-sidenav-content').append('svg')
 			.attr('width', '100%')
 			.attr('height', this.height)
 			.call(this.zoom);
@@ -95,7 +100,6 @@ export class MapComponent implements OnInit, OnChanges {
 			.on('click' , (d) => {
 				this.clicked(d);
 			});
-
 	}
 
 	showToolTip(d){
@@ -109,17 +113,21 @@ export class MapComponent implements OnInit, OnChanges {
 
 	clicked(d) {
 		//highlight the clicked country
-		if (this.active.data()[0] === d)  return this.resetMap();
+		if (this.active.data()[0] === d) {
+			this.sidebarActive = false;
+			return this.resetMap();
+		}
 		this.active.classed("highlighted", false);
 		this.active = d3.selectAll('path')
 			.filter(function(i){return i['properties']['geonunit'] == d.properties.geonunit})
 			.classed("highlighted" , true);
+		this.sidebarActive = true;
 
 		//zoom to country bounding box
 		let bounds = this.path.bounds(d),
 			dx = bounds[1][0] - bounds[0][0],
 			dy = bounds[1][1] - bounds[0][1],
-			x = (bounds[0][0] + bounds[1][0]) / 2,
+			x = (bounds[0][0] + bounds[1][0]) / 2.05,
 			y = (bounds[0][1] + bounds[1][1]) / 2,
 			scale = Math.max(1, Math.min(8, 0.9 / Math.max(dx / this.width, dy / this.height))),
 			translate = [this.width / 2 - scale * x, this.height / 2 - scale * y];
@@ -140,21 +148,7 @@ export class MapComponent implements OnInit, OnChanges {
       		.call(this.zoom.transform, d3.zoomIdentity ); // updated for d3 v4
 	  }
 
-	getSiteCounts(): void {
-		this.mapService.getCountrySiteCount()
-			.subscribe(sites => this.displaySites(sites) , err => console.log(err))
+	displaySites(sites) {
+		console.log(sites);
 	}
-
-	displaySites(sites){
-
-	}
-
-	ngAfterViewInit(){
-
-	}
-
-	ngOnChanges() {
-
-	}
-
 }
