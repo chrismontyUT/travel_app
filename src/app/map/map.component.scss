@@ -7,12 +7,12 @@ app-map {
 path{
 	stroke-width: .1px;
 	stroke: white;
-	fill: #74be9b;
+	fill: #6ebe80;
 	cursor: pointer;
 }
 
 path:hover  {
-	fill: orchid;
+	fill: #da9db6;
 }
 
 .highlighted{
@@ -21,7 +21,7 @@ path:hover  {
 
 
 .background {
-	fill: blue;
+	fill: #5e8fff;
 	pointer-events: all;
 	height: 100%;
 	width: 100%;
@@ -31,13 +31,10 @@ path:hover  {
 div.tooltip {
 	position: absolute;
 	text-align: center;
-	width: 80px;
-	height: 28px;
-	//padding: 2px;
+	width: 100px;
+	height: auto;
 	font: 11px sans-serif;
-	//background: lightsteelblue;
-	border: 0px;
-	border-radius: 8px;
+	border: 0;
 	line-height: 1;
  	font-weight: bold;
   	padding: 8px;
@@ -53,7 +50,7 @@ div.tooltip:after {
 	font-size: 10px;
 	line-height: 1;
 	color: rgba(0, 0, 0, 0.8);
-	content: "\25BC";
+	//content: "\25BC";
 	position: absolute;
 	text-align: center;
   }

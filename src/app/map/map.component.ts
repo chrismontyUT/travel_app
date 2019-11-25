@@ -91,7 +91,7 @@ export class MapComponent implements OnInit {
 				this.showToolTip(d);
 				})
 			.on('mousemove' , () => {
-				this.tooltip.style('top' , (d3.event.pageY+this.tooltipOffset.y)+'px')
+				this.tooltip.style('top' , (d3.event.pageY + 3*this.tooltipOffset.y)+'px')
 					.style('left' , (d3.event.pageX+this.tooltipOffset.x)+'px');
 				})
 			.on('mouseout' , () => {
