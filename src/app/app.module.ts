@@ -20,10 +20,11 @@ import { JsonService } from './services/json.service';
 import { PopUpService } from './services/pop-up.service';
 import { MatDialogModule, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
-import { AppRoutingModule } from './/app-routing.module';
+import { AppRoutingModule } from './app-routing.module';
 import { Router } from '@angular/router';
 import { SearchQuestionComponent } from './search-question/search-question.component';
 import { SearchQuestionCardComponent } from './search-question-card/search-question-card.component';
+import { LoaderComponent } from './loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { SearchQuestionCardComponent } from './search-question-card/search-quest
     ProgressBarComponent,
     SearchQuestionComponent,
     SearchQuestionCardComponent,
+    LoaderComponent,
   ],
   entryComponents: [SearchComponent],
   imports: [

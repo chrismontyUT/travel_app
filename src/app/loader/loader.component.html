@@ -1,0 +1,8 @@
+<div *ngIf="loading" class="spinner">
+  <div>
+    <fa-icon class="text-primary" [icon]="faSpinner" [spin]="true" size="4x"></fa-icon>
+  </div>
+  <div class="spinner-text">{{text}}</div>
+</div>
+
+<ng-content *ngIf="!loading"></ng-content>
