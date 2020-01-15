@@ -1,4 +1,4 @@
-import { Component, OnInit , OnChanges, ViewChild, ElementRef, Input, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import * as d3 from 'd3';
 import * as d3_projection from 'd3-geo-projection';
 import * as topojson from 'topojson';
