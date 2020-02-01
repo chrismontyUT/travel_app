@@ -1,10 +1,12 @@
-import { Component, OnInit , OnChanges, ViewChild, ElementRef, Input, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import * as d3 from 'd3';
 import * as d3_projection from 'd3-geo-projection';
 import * as topojson from 'topojson';
 import { JsonService } from '../services/json.service';
 import { MapService } from "../services/map.service";
+import { Observable } from "rxjs";
 import { iCountrySiteCount } from "../common/models/countrySiteCount";
+import { iCountryInfo } from "../common/models/countryInfo";
 
 @Component({
 	selector: 'app-map',
@@ -14,38 +16,35 @@ import { iCountrySiteCount } from "../common/models/countrySiteCount";
 	encapsulation: ViewEncapsulation.None
 	})
 export class MapComponent implements OnInit {
-	private margin: any;
+	private margin: Record<string, number> = { top: 20, bottom: 20, left: 20, right: 20};
 	private svg: any;
-	private readonly width: number;
-	private readonly height: number;
+	private readonly width: number = window.innerWidth;
+	private readonly height: number = window.innerHeight;
 	private projection: any;
 	private path: any;
 	private world: any;
-	private tooltipOffset: any;
+	private tooltipOffset: Record<string, number> = {x: 15 , y: -35};
 	private tooltip: any;
-	public active: any;
+	public active: any = d3.select(null);
+	public activeCountryInfo$: Observable<iCountryInfo>;
 	private features: any;
 	private featureCollection: any;
 	private zoom: any;
 	private view:any;
-	private sidebarActive: boolean;
+	private sidebarActive: boolean = false;
 
-	constructor(private jsonService: JsonService, private mapService: MapService) {
-		this.margin = { top: 20, bottom: 20, left: 20, right: 20};
-		this.width = window.innerWidth;
-		this.height = window.innerHeight  * .9165;
-		this.tooltipOffset = {x: 15 , y: -35};
-		this.active = d3.select(null);
-		this.sidebarActive = false;
-	}
+	constructor(
+		private readonly jsonService: JsonService,
+		private readonly mapService: MapService
+	){ }
 
 	ngOnInit() {
 		this.jsonService.getData('assets/topojson/countries.json')
 			.subscribe(data => this.setMap(data) , err => console.log(err));
 
-		this.mapService.getCountrySiteCount()
-			.subscribe(sites => this.displaySites(sites) , err => console.log(err));
-	}
+		this.activeCountryInfo$ = this.mapService.activeCountryInfo;
+	};
+
 
 	setMap(data:Object){
 		this.world = data;
@@ -70,11 +69,10 @@ export class MapComponent implements OnInit {
 
 		this.svg = d3.select('mat-sidenav-content').append('svg')
 			.attr('width', '100%')
-			.attr('height', this.height)
+			.attr('height', '99%')
 			.call(this.zoom);
 
 		this.view = this.svg.append('rect')
-    		.attr("class", "background")
 			.on("click", () => {
 				this.resetMap()}
 			)
@@ -117,6 +115,8 @@ export class MapComponent implements OnInit {
 			this.sidebarActive = false;
 			return this.resetMap();
 		}
+		//get country info data
+		this.mapService.sendClickedCountry(d.properties.geonunit);
 		this.active.classed("highlighted", false);
 		this.active = d3.selectAll('path')
 			.filter(function(i){return i['properties']['geonunit'] == d.properties.geonunit})
@@ -150,5 +150,9 @@ export class MapComponent implements OnInit {
 
 	displaySites(sites) {
 		console.log(sites);
+	}
+
+	setActiveCountryData(data){
+		console.log(data);
 	}
 }

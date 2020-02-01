@@ -1,4 +1,20 @@
 <mat-sidenav-container>
-    <mat-sidenav [(opened)]="sidebarActive">Start, {{active}}</mat-sidenav>
+    <mat-sidenav [(opened)]="sidebarActive">
+        <ng-container class="countryInfo" *ngIf="(activeCountryInfo$ |async) as info">
+            <h1 class="countryName">{{info.country_short_name}}</h1>
+            <p class="countryName">{{info.country_full_name}}</p>
+            <hr>
+            <p>{{info.country_description}}</p>
+            <p class="section">Diving in {{info.country_short_name}}: </p>
+            <p class="section">Quick Facts: </p>
+            <ul>
+                <li>capitol: {{info.capitol}}</li>
+                <li>population: {{info.population}}</li>
+                <li>major geography: {{info.major_geography}}</li>
+                <li>predominant language: {{info.predominant_language}}</li>
+                <li>driving side: {{info.driving_side}}</li>
+            </ul>
+        </ng-container>
+    </mat-sidenav>
     <mat-sidenav-content></mat-sidenav-content>
 </mat-sidenav-container>
