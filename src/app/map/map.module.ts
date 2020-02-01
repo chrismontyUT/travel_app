@@ -4,11 +4,13 @@ import { LoaderModule } from "../loader/loader.module";
 import { JsonService } from "../services/json.service";
 import { MapService } from "../services/map.service";
 import { MapComponent } from "./map.component";
+import {CommonModule} from "@angular/common";
 
 @NgModule({
     imports: [
         MatSidenavModule,
-        LoaderModule
+        LoaderModule,
+        CommonModule
     ],
     providers: [
         JsonService,

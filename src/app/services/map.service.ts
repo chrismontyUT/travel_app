@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import { iCountrySiteCount } from "../common/models/countrySiteCount";
-import {Observable, of, Subject} from "rxjs";
+import { iCountryInfo } from "../common/models/countryInfo";
+import {BehaviorSubject, Observable, of, Subject} from "rxjs";
 import { catchError, map, tap } from 'rxjs/operators';
 
 @Injectable({
@@ -10,14 +11,38 @@ import { catchError, map, tap } from 'rxjs/operators';
 export class MapService {
 
   base_url: string = 'http://localhost:8080';
-  private region = new Subject<number>();
-  private scubaType = new Subject<number>();
-  private animalType = new Subject<number>();
+  private regions = new Subject<number[]>();
+  private scubaTypes = new Subject<string[]>();
+  private animalTypes = new Subject<string[]>();
+  private lastClickedCountry = new Subject<string>();
+  private _activeCountryInfo = new Subject<iCountryInfo>();
+  readonly activeCountryInfo = this._activeCountryInfo.asObservable();
+  private dataStore: {  activeCountryInfo: iCountryInfo,
+                        lastClickedCountry: string,
+                        regions: number[],
+                        scubaTypes: string[],
+                        animalTypes: string[] } = this.getInitialDataStore();
 
   constructor(private http: HttpClient) { }
 
-  getCountryInfo(){
+  getCountryInfo(countryName: string){
+    let params = new HttpParams();
+    params = params.append('countryName', countryName);
+    this.http.get<iCountryInfo>(this.base_url.concat('/map/CountryInfo'), { params })
+        .subscribe(
+            data => this.processCountryInfoResponse(data),
+            error => this.handleError<iCountryInfo>('getCountryInfo', error)
+        )
+  }
 
+  viewDataStore(){
+    console.log(this.dataStore);
+  }
+
+  processCountryInfoResponse(data: any){
+    this.dataStore.activeCountryInfo = data;
+    console.log("data returned!!!", data);
+    this._activeCountryInfo.next(data);
   }
 
   getCountrySiteCount(): Observable<iCountrySiteCount[]>{
@@ -28,15 +53,45 @@ export class MapService {
   }
 
   sendRegion(regions: Array<number>){
-    //this.region.next(regions);
+    this.regions.next(regions);
   }
 
-  updateRegion(){}
+  sendScubaType(types: Array<string>){
+    this.scubaTypes.next(types);
+  }
 
-  updateScubaType(){}
+  sendAnimalType(types: Array<string>){
+    this.animalTypes.next(types);
+  }
 
-  updateAnimalType(){}
+  sendClickedCountry(countryName: string){
+    if(countryName == this.dataStore.lastClickedCountry) return;
+    this.lastClickedCountry.next(countryName);
+    this.dataStore.lastClickedCountry = countryName;
+    this.getCountryInfo(countryName);
+  }
 
+  getInitialDataStore(){
+    const emptyCountryInfo = (): iCountryInfo => ({
+      country_full_name: 'EMPTY',
+      iso2: '',
+      country_short_name: 'EMPTY!!!',
+      continent: '',
+      sub_region: '',
+      population: 0,
+      capitol: '',
+      major_geography: '',
+      predominant_language: '',
+      driving_side: '',
+      peak_tourist_season: '',
+      best_time_to_dive: '',
+      bad_time_to_go: '',
+      bodies_of_water: '',
+      country_description: ''
+    });
+    this._activeCountryInfo.next(emptyCountryInfo());
+    return { activeCountryInfo: emptyCountryInfo(), lastClickedCountry: '', regions: [], scubaTypes: [], animalTypes: [] }
+  }
 
   /**
    * Handle Http operation that failed.

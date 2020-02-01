@@ -16,33 +16,28 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SearchComponent } from './search/search.component';
-import { ProfileComponent } from './profile/profile.component';
 import { SettingsComponent } from './settings/settings.component';
 import { MyMapsViewComponent } from './my-maps-view/my-maps-view.component';
-import { SaveSearchComponent } from './save-search/save-search.component';
 import { MapModule } from './map/map.module';
 import { JsonService } from './services/json.service';
-import { MatDialogModule, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import { AppRoutingModule } from './app-routing.module';
 import { Router } from '@angular/router';
 import { SearchQuestionComponent } from './search-question/search-question.component';
 import { SearchQuestionCardComponent } from './search-question-card/search-question-card.component';
-import { LoaderComponent } from './loader/loader.component';
+import { LoaderModule } from './loader/loader.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     SearchComponent,
-    ProfileComponent,
     SettingsComponent,
     MyMapsViewComponent,
-    SaveSearchComponent,
     ProgressBarComponent,
     SearchQuestionComponent,
-    SearchQuestionCardComponent,
-    LoaderComponent,
+    SearchQuestionCardComponent
   ],
   entryComponents: [SearchComponent],
   imports: [
@@ -62,7 +57,8 @@ import { LoaderComponent } from './loader/loader.component';
     BsDropdownModule.forRoot(),
     HttpClientModule,
     AppRoutingModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    LoaderModule
   ],
   providers: [JsonService],
   bootstrap: [AppComponent]

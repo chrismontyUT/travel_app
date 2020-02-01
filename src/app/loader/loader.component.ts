@@ -9,7 +9,6 @@ import { faAnchor } from '@fortawesome/free-solid-svg-icons';
 export class LoaderComponent {
   @Input() loading = false;
   @Input() text = 'Loading...';
-  constructor() { }
 
   faSpinner = faAnchor;
 
