@@ -17,6 +17,8 @@ export class MapService {
   private lastClickedCountry = new Subject<string>();
   private _activeCountryInfo = new Subject<iCountryInfo>();
   readonly activeCountryInfo = this._activeCountryInfo.asObservable();
+  private _countrySiteCounts = new Subject<iCountrySiteCount[]>();
+  readonly countrySiteCounts = this._countrySiteCounts.asObservable();
   private dataStore: {  activeCountryInfo: iCountryInfo,
                         lastClickedCountry: string,
                         regions: number[],
@@ -33,16 +35,6 @@ export class MapService {
             data => this.processCountryInfoResponse(data),
             error => this.handleError<iCountryInfo>('getCountryInfo', error)
         )
-  }
-
-  viewDataStore(){
-    console.log(this.dataStore);
-  }
-
-  processCountryInfoResponse(data: any){
-    this.dataStore.activeCountryInfo = data;
-    console.log("data returned!!!", data);
-    this._activeCountryInfo.next(data);
   }
 
   getCountrySiteCount(): Observable<iCountrySiteCount[]>{
@@ -69,6 +61,12 @@ export class MapService {
     this.lastClickedCountry.next(countryName);
     this.dataStore.lastClickedCountry = countryName;
     this.getCountryInfo(countryName);
+  }
+
+  processCountryInfoResponse(data: any){
+    this.dataStore.activeCountryInfo = data;
+    console.log("data returned!!!", data);
+    this._activeCountryInfo.next(data);
   }
 
   getInitialDataStore(){

@@ -1,4 +1,4 @@
 export interface iCountrySiteCount {
-    countryShortName: string;
-    siteCount: number;
+    country_short_name: string;
+    site_count: number;
 }
