@@ -40,7 +40,7 @@ export class SearchQuestionComponent implements OnInit, OnDestroy {
 	}
 
 	isAlreadyClicked(answerTitle: string){
-		this.questionResultsObject.answerList.indexOf(answerTitle) === -1 ? false : true;
+		this.questionResultsObject.answerList.indexOf(answerTitle) !== -1;
 	}
 
 }

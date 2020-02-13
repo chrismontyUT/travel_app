@@ -1,8 +1,11 @@
 <div class="question-container">
-	<header class="title">{{questionTitle}}</header>
-	<div fxLayout="row wrap" fxLayoutGap=".5%" fxLayoutAlign="center">
+	<div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap=".5%" fxLayoutAlign="space-around center">
 		<ng-container *ngFor="let answer of answerList">
-			<app-search-question-card fxFlex="18%"
+			<app-search-question-card
+					fxFlex="0 1 18%"
+					fxFlex.lt-lg="0 1 25%"
+					fxFlex.lt-md="0 1 35%"
+					fxFlex.lt-sm="100%"
 				[answer]="answer"
 				(answerClicked)="saveAnswer($event)">
 			</app-search-question-card>

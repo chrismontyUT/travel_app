@@ -1,8 +1,11 @@
 <button mat-button [class.question-clicked]="clicked" [@cardState]="cardState" (click)="cardSelected($event)">
-	<mat-card>
+	<mat-card class="mat-elevation-z10">
 		<mat-card-header>
-			<mat-card-title>{{answer.answerTitle}}</mat-card-title>
+			<mat-card-title class="title">
+				{{answer.answerTitle}}
+				<img class="check-mark" src="../../assets/images/check-mark.png" alt="">
+			</mat-card-title>
 		</mat-card-header>
-		<img mat-card-image src={{answer.imagePath}} class="img-responsive">
+		<img mat-card-image src={{answer.imagePath}} class="img-responsive" alt="">
 	</mat-card>
 </button>

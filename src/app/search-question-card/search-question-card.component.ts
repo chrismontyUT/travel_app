@@ -6,7 +6,7 @@ import {answer} from '../shared/utils'
   selector: 'app-search-question-card',
   templateUrl: './search-question-card.component.html',
 	styleUrls: ['./search-question-card.component.scss'],
-	animations: [
+	/*animations: [
 		trigger('cardState' , [
 			state('shiftUp' , style({
 				transform: 'translateY(-50px)'
@@ -14,7 +14,7 @@ import {answer} from '../shared/utils'
 			transition('* => *'  , animate('500ms ease-out'))
 		]
 		)
-	]
+	]*/
 })
 export class SearchQuestionCardComponent implements OnInit {
 
@@ -44,7 +44,7 @@ export class SearchQuestionCardComponent implements OnInit {
 	ngOnInit() {
 		if(this.alreadyClicked){
 			this.clicked = true;
-		};
+		}
 	}
 
 	cardSelected(event){

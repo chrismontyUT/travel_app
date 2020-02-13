@@ -27,6 +27,7 @@ import { Router } from '@angular/router';
 import { SearchQuestionComponent } from './search-question/search-question.component';
 import { SearchQuestionCardComponent } from './search-question-card/search-question-card.component';
 import { LoaderModule } from './loader/loader.module';
+import {MatTabsModule} from "@angular/material/tabs";
 
 @NgModule({
   declarations: [
@@ -40,26 +41,27 @@ import { LoaderModule } from './loader/loader.module';
     SearchQuestionCardComponent
   ],
   entryComponents: [SearchComponent],
-  imports: [
-    MapModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    LayoutModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule,
-    MatCardModule,
-    MatDialogModule,
-    MatProgressBarModule,
-    TooltipModule.forRoot(),
-    BsDropdownModule.forRoot(),
-    HttpClientModule,
-    AppRoutingModule,
-    FlexLayoutModule,
-    LoaderModule
-  ],
+    imports: [
+        MapModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        LayoutModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatSidenavModule,
+        MatIconModule,
+        MatListModule,
+        MatCardModule,
+        MatDialogModule,
+        MatProgressBarModule,
+        TooltipModule.forRoot(),
+        BsDropdownModule.forRoot(),
+        HttpClientModule,
+        AppRoutingModule,
+        FlexLayoutModule,
+        LoaderModule,
+        MatTabsModule
+    ],
   providers: [JsonService],
   bootstrap: [AppComponent]
 })

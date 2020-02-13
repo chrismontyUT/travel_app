@@ -1,33 +1,12 @@
 import { Component, ViewChildren, QueryList, OnChanges} from '@angular/core';
 import { questionList , Question} from './questionsList';
 import { SearchQuestionComponent } from '../search-question/search-question.component'
-import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
 	selector: 'app-search',
 	providers: [],
   	templateUrl: './search.component.html',
-	styleUrls: ['./search.component.scss'],
-	animations: [
-		trigger('slideIncrement', [
-		  transition(':enter', [
-			style({transform: 'translateX(100%)'}),
-			animate('1000ms ease-in', style({transform: 'translateX(0%)'}))
-		  ]),
-		  transition(':leave', [
-			animate('1ms ease-in', style({transform: 'translateX(-100%)'}))
-		  ])
-		]),
-		/*trigger('slideDecrement', [
-			transition(':enter', [
-			  style({transform: 'translateX(-100%)'}),
-			  animate('200ms ease-in', style({transform: 'translateX(0%)'}))
-			]),
-			transition(':leave', [
-			  animate('200ms ease-in', style({transform: 'translateX(100%)'}))
-			])
-		  ])*/
-	  ]
+	styleUrls: ['./search.component.scss']
 })
 export class SearchComponent implements OnChanges {
 
@@ -99,6 +78,5 @@ export class SearchComponent implements OnChanges {
 	};
 
 	goToMapView(){
-
 	}
 }
