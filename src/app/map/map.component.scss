@@ -4,6 +4,10 @@ app-map {
 	width: 100%;
 }
 
+//.countryInfo {
+//	position: relative;
+//}
+
 .countryName {
 	text-align: center;
 }
@@ -31,6 +35,18 @@ path:hover  {
 	fill: #beaa74;
 }
 
+mat-card {
+	margin: 10px;
+}
+
+.button-row {
+	//position: absolute;
+	bottom: 20px;
+	margin: 20px;
+}
+.mat-raised-button{
+	margin: 15px;
+}
 
 .background {
 	fill: #5e8fff;

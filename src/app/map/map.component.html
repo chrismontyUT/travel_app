@@ -5,15 +5,32 @@
             <p class="countryName">{{info.country_full_name}}</p>
             <hr>
             <p>{{info.country_description}}</p>
-            <p class="section">Diving in {{info.country_short_name}}: </p>
-            <p class="section">Quick Facts: </p>
-            <ul>
-                <li>capitol: {{info.capitol}}</li>
-                <li>population: {{info.population}}</li>
-                <li>major geography: {{info.major_geography}}</li>
-                <li>predominant language: {{info.predominant_language}}</li>
-                <li>driving side: {{info.driving_side}}</li>
-            </ul>
+            <mat-card class="mat-elevation-z6">
+                <mat-card-title>Diving in {{info.country_short_name}}:</mat-card-title>
+                <mat-card-content>
+                    <ul>
+                        <li>Best Time To Dive: {{info.best_time_to_dive}}</li>
+                        <li>Bodies of Water: {{info.bodies_of_water}}</li>
+                        <li>Peak Tourist Season: {{info.peak_tourist_season}}</li>
+                    </ul>
+                </mat-card-content>
+            </mat-card>
+            <mat-card class="mat-elevation-z6">
+                <mat-card-title>Quick Facts: </mat-card-title>
+                <mat-card-content>
+                    <ul>
+                        <li>Capitol: {{info.capitol}}</li>
+                        <li>Population: {{info.population}}</li>
+                        <li>Major Geography: {{info.major_geography}}</li>
+                        <li>Predominant Language: {{info.predominant_language}}</li>
+                        <li>Driving Side: {{info.driving_side}}</li>
+                    </ul>
+                </mat-card-content>
+            </mat-card>
+            <div class="button-row">
+                <button mat-raised-button color="primary">View Dive Sites!</button>
+                <button mat-raised-button color="primary">View PADI Dive Centers</button>
+            </div>
         </ng-container>
     </mat-sidenav>
     <mat-sidenav-content></mat-sidenav-content>

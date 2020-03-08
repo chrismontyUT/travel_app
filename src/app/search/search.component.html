@@ -1,18 +1,61 @@
-<div class="search-page" fxLayout="row" fxLayoutAlign="space-between center">
-	<div fxFlex="6%">
-		<button *ngIf="currentQuestionID > 1" (click)="decrementCurrentQuestionID($event)" mat-raised-button >Previous</button>
-	</div>
-	<ng-container  *ngFor="let Question of questionList">
-		<app-search-question class="question" *ngIf="currentQuestionID == Question.questionID" [@slideIncrement] fxFlex="85%"
-			[questionTitle]="Question.questionTitle"
-			[questionID]="Question.questionID"
-			[answerList]="Question.answerList"
-			(questionResult)='generateJson($event)'>
+<mat-tab-group class="mat-tab-fill-height">
+	<mat-tab label="Where To?">
+		<app-search-question class="question"
+							 [questionTitle]="questionList[0].questionTitle"
+							 [questionID]="questionList[0].questionID"
+							 [answerList]="questionList[0].answerList">
 		</app-search-question>
-	</ng-container>
-	<div fxFlex="6%">
-		<button flex *ngIf="currentQuestionID < 3" (click)="incrementCurrentQuestionID($event)" mat-raised-button >NEXT</button>
-		<button flex *ngIf="currentQuestionID == 3" (click)="getAnswersFromComponent()" mat-raised-button >FINISH</button>
-	</div>
-</div>
-
+	</mat-tab>
+	<mat-tab label="What Type Of Dive?">
+		<app-search-question class="question"
+							 [questionTitle]="questionList[1].questionTitle"
+							 [questionID]="questionList[1].questionID"
+							 [answerList]="questionList[1].answerList">
+		</app-search-question>
+	</mat-tab>
+	<mat-tab label="Animals?">
+		<app-search-question class="question"
+							 [questionTitle]="questionList[2].questionTitle"
+							 [questionID]="questionList[2].questionID"
+							 [answerList]="questionList[2].answerList">
+		</app-search-question>
+	</mat-tab>
+	<mat-tab label="Finished?">
+		<div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap=".5%" fxLayoutAlign="space-around center">
+			<mat-card class="mat-elevation-z10 result">
+				<mat-card-title class="title">{{questionList[0].questionTitle}}</mat-card-title>
+				<img mat-card-image>
+				<mat-card-content>
+					<ng-container class="answerList" *ngIf="(newSearchRegions$ | async) as answers">
+						<li *ngFor="let answer of answers">
+							{{ answer }}
+						</li>
+					</ng-container>
+				</mat-card-content>
+			</mat-card>
+			<mat-card class="mat-elevation-z10 result">
+				<mat-card-title class="title">{{questionList[1].questionTitle}}</mat-card-title>
+				<img mat-card-image>
+				<mat-card-content>
+					<ng-container class="answerList" *ngIf="(newSearchDiveTypes$ | async) as answers">
+						<li *ngFor="let answer of answers">
+							{{ answer }}
+						</li>
+					</ng-container>
+				</mat-card-content>
+			</mat-card>
+			<mat-card class="mat-elevation-z10 result">
+				<mat-card-title class="title">{{questionList[2].questionTitle}}</mat-card-title>
+				<img mat-card-image>
+				<mat-card-content>
+					<ng-container class="answerList" *ngIf="(newSearchAnimalTypes$ | async) as answers">
+						<li *ngFor="let answer of answers">
+							{{ answer }}
+						</li>
+					</ng-container>
+				</mat-card-content>
+			</mat-card>
+		</div>
+		<button mat-raised-button color="primary" (click)="submitSearch()">Submit</button>
+	</mat-tab>
+</mat-tab-group>

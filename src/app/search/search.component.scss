@@ -1,12 +1,19 @@
-.search-page{
+mat-tab-group{
 	height: 100%;
 }
 
-.wrapper{
-	  position: relative;
-  }
+.result {
+	margin-top: 40px;
+}
+.column{
+	margin-top: 50px;
+	margin-left: 5%;
+	width: 25%;
+	float: left;
+}
 
-
-.question{
-	height: 100%;
+button {
+	position: absolute;
+	bottom: 20px;
+	right: 20px;
 }

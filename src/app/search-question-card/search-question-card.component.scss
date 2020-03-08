@@ -1,15 +1,28 @@
-mat-card{
-    height:200px;
-	width:180px;
-	margin-bottom: 50px;
+button{
+	height: 100%;
+	width: 100%;
+	padding: 0;
+	border: none;
+	background: none;
+	outline: none;
+	//background-color: aquamarine;
+	//margin-bottom: 20px;
 }
 
-mat-card img{
-	object-fit: cover;
-	width: 135%;
+mat-card{
+    height:100%;
+}
+
+img{
+	//object-fit: cover;
+	//width: 150px;
 	height: 80%;
 }
 
 .question-clicked{
-	background-color: aqua;
+	//background-color: aqua;
+}
+
+* {
+	outline: none;
 }
