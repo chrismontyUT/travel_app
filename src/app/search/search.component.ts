@@ -1,6 +1,10 @@
-import { Component, ViewChildren, QueryList, OnChanges} from '@angular/core';
-import { questionList , Question} from './questionsList';
+import { Component, OnInit } from '@angular/core';
+import { Question } from '../shared/utils';
+import { questionList } from './questionsList';
 import { SearchQuestionComponent } from '../search-question/search-question.component'
+import { MapService } from "../services/map.service";
+import {Observable} from "rxjs";
+import { Router } from "@angular/router";
 
 @Component({
 	selector: 'app-search',
@@ -8,75 +12,29 @@ import { SearchQuestionComponent } from '../search-question/search-question.comp
   	templateUrl: './search.component.html',
 	styleUrls: ['./search.component.scss']
 })
-export class SearchComponent implements OnChanges {
+export class SearchComponent implements OnInit {
 
-	@ViewChildren(SearchQuestionComponent) searchQuestionChildren: QueryList<SearchQuestionComponent>;
 	questionList: Question[];
-	currentQuestionID: number = 1;
+	public newSearchRegions$: Observable<string[]>;
+	public newSearchDiveTypes$: Observable<string[]>;
+	public newSearchAnimalTypes$: Observable<string[]>;
 
-	searchJson: any =  [
-						{ 'id' : '1',
-						'answers' : []
-						},
-						{ 'id' :'2',
-						 'answers' : []
-						},
-						{ 'id':'3',
-						 'answers' : []
-						}
-	];
 
-  	constructor (){
+  	constructor (
+  		private readonly mapService: MapService,
+		private router: Router
+	){
+	};
+
+  	ngOnInit(): void {
 		this.questionList = questionList;
-	};
-
-	ngOnChanges(){
+		this.newSearchRegions$ = this.mapService.newSearchRegions;
+		this.newSearchDiveTypes$ = this.mapService.newSearchDiveTypes;
+		this.newSearchAnimalTypes$ = this.mapService.newSearchAnimalTypes;
 	}
 
-	incrementCurrentQuestionID(){
-		if(this.currentQuestionID == 3){
-			return;
-		}
-		this.currentQuestionID += 1;
-		console.log(this.searchJson);
-	}
-
-	decrementCurrentQuestionID(){
-		if(this.currentQuestionID == 1){
-			return;
-		}
-		this.currentQuestionID -= 1;
-		console.log(this.searchJson);
-
-	};
-
-	getAnswersFromComponent(){
-		console.log(this.searchQuestionChildren.last.questionResultsObject.answerList);
-		this.searchJson.forEach(element => {
-			if(element.id == this.searchQuestionChildren.last.questionResultsObject.questionID){
-				element.answers = this.searchQuestionChildren.last.questionResultsObject.answerList;
-			}
-		});
-		console.log(this.searchJson);
-	}
-
-	getSelectedListToRecreateComponent(){
-		this.searchJson.forEach(element => {
-			if(element.id == this.currentQuestionID){
-				console.log(element.answers);
-				return element.answers;
-			}
-		});
-	}
-
-	generateJson(questionResult){
-		this.searchJson.forEach(element => {
-			if(element.id == questionResult.questionID){
-				element.answers = questionResult.answerList;
-			}
-		});
-	};
-
-	goToMapView(){
+	submitSearch() {
+  		this.mapService.sendNewSearch();
+  		this.router.navigate(['./Map']);
 	}
 }

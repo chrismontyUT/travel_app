@@ -12,7 +12,11 @@ app-search-question-card{
 }
 
 .question-clicked{
-	background-color: #5e8fff;
+	opacity: 1;
+}
+
+.mat-card{
+	padding: 0;
 }
 
 ::ng-deep .mat-card-header-text {
@@ -29,4 +33,5 @@ app-search-question-card{
 	float: right;
 	height: 40px;
 	width: 40px;
+	opacity: 0;
 }

@@ -28,6 +28,7 @@ import { SearchQuestionComponent } from './search-question/search-question.compo
 import { SearchQuestionCardComponent } from './search-question-card/search-question-card.component';
 import { LoaderModule } from './loader/loader.module';
 import {MatTabsModule} from "@angular/material/tabs";
+import {MatExpansionModule} from "@angular/material/expansion";
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import {MatTabsModule} from "@angular/material/tabs";
         AppRoutingModule,
         FlexLayoutModule,
         LoaderModule,
-        MatTabsModule
+        MatTabsModule,
+        MatExpansionModule
     ],
   providers: [JsonService],
   bootstrap: [AppComponent]

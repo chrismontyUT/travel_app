@@ -1,46 +1,43 @@
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { searchQuestionResults } from './search-question.model'
 import { answer } from '../shared/utils';
+import { MapService } from "../services/map.service";
 
 @Component({
   selector: 'app-search-question',
   templateUrl: './search-question.component.html',
   styleUrls: ['./search-question.component.scss']
 })
-export class SearchQuestionComponent implements OnInit, OnDestroy {
+export class SearchQuestionComponent implements OnInit {
 
 	@Input('questionTitle') questionTitle: string;
 	@Input('questionID') questionID: number;
-	//@Input('selected') selected: string[];
 	@Input() answerList: answer[];
-
-	@Output() questionResult = new EventEmitter();
 
 	questionResultsObject: searchQuestionResults;
 
-  constructor() {
-	}
+  	constructor(
+  		private readonly mapService: MapService)
+	{ }
 
-  ngOnInit() {
+  	ngOnInit() {
 		this.questionResultsObject = new searchQuestionResults(this.questionID);
 	}
 
-	ngOnDestroy(){
-		this.questionResult.emit(this.questionResultsObject);
-	}
 	// This method saves/removes each answer title to an array when it is clicked
 	saveAnswer(answerClicked){
 		this.questionResultsObject.answerList.indexOf(answerClicked) === -1 ?
-								this.questionResultsObject.answerList.push(answerClicked) :			//push the new selection into the array
-								this.questionResultsObject.answerList.splice(this.questionResultsObject.answerList.indexOf(answerClicked) , 1); //splice the selection from the array if it exists
+								this.appendAnswer(answerClicked) :	//push the new selection into the array
+								this.removeAnswer(answerClicked); //splice the selection from the array if it exists
+  	}
+
+  	appendAnswer(answerClicked : string) {
+		this.questionResultsObject.answerList.push(answerClicked);
+		this.mapService.updateAnswers(answerClicked, 'append', this.questionTitle)
 	}
 
-	reportAnswers(){
-		this.questionResult.emit(this.questionResultsObject);
+	removeAnswer(answerClicked : string) {
+		this.questionResultsObject.answerList.splice(this.questionResultsObject.answerList.indexOf(answerClicked, 1));
+		this.mapService.updateAnswers(answerClicked, 'remove', this.questionTitle)
 	}
-
-	isAlreadyClicked(answerTitle: string){
-		this.questionResultsObject.answerList.indexOf(answerTitle) !== -1;
-	}
-
 }

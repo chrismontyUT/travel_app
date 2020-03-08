@@ -16,7 +16,6 @@ import { iCountryInfo } from "../common/models/countryInfo";
 	encapsulation: ViewEncapsulation.None
 	})
 export class MapComponent implements OnInit {
-	// private margin: Record<string, number> = { top: 20, bottom: 20, left: 20, right: 20};
 	private svg: any;
 	private readonly width: number = window.innerWidth;
 	private readonly height: number = window.innerHeight;
