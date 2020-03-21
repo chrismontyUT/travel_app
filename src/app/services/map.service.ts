@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import { iCountrySiteCount } from "../common/models/countrySiteCount";
+import { iZoneSiteCount } from "../common/models/zoneSiteCount";
 import { iCountryInfo } from "../common/models/countryInfo";
 import {BehaviorSubject, Observable, of, Subject} from "rxjs";
 import { catchError, map, tap } from 'rxjs/operators';
@@ -25,7 +25,7 @@ export class MapService {
   private lastClickedCountry = new Subject<string>();
   private _activeCountryInfo = new Subject<iCountryInfo>();
   readonly activeCountryInfo = this._activeCountryInfo.asObservable();
-  private _countrySiteCounts = new Subject<iCountrySiteCount[]>();
+  private _countrySiteCounts = new Subject<iZoneSiteCount[]>();
   readonly countrySiteCounts = this._countrySiteCounts.asObservable();
   private currentDataStore: {  activeCountryInfo: iCountryInfo,
                         lastClickedCountry: string,
@@ -51,10 +51,14 @@ export class MapService {
         )
   }
 
-  getCountrySiteCount(regions?: string[], diveTypes?: string[], animals?: string[]): Observable<iCountrySiteCount[]>{
-    return this.http.get<iCountrySiteCount[]>(this.base_url.concat('/map/SiteCountByCountry'))
+  getZoneSiteCount(): Observable<iZoneSiteCount[]>{
+    let params = new HttpParams()
+                  .set('regions', this.currentDataStore.regions.join(','))
+                  .set('divetype', this.currentDataStore.diveTypes.join(','))
+                  .set('animals', this.currentDataStore.animalTypes.join(','));
+    return this.http.get<iZoneSiteCount[]>(this.base_url.concat('/map/SiteCountByZone'), {params: params})
         .pipe(
-            catchError(this.handleError<iCountrySiteCount[]>('getCountrySiteCount', []))
+            catchError(this.handleError<iZoneSiteCount[]>('getZoneSiteCount', []))
         );
   }
 
@@ -110,7 +114,7 @@ export class MapService {
 
   sendNewSearch(){
     this.currentDataStore = this.newSearchDataStore;
-    this.getCountrySiteCount(this.currentDataStore.regions, this.currentDataStore.diveTypes, this.currentDataStore.animalTypes)
+    this.getZoneSiteCount();
   }
 
   processCountryInfoResponse(data: any){

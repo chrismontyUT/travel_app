@@ -5,7 +5,7 @@ import * as topojson from 'topojson';
 import { JsonService } from '../services/json.service';
 import { MapService } from "../services/map.service";
 import { Observable } from "rxjs";
-import { iCountrySiteCount } from "../common/models/countrySiteCount";
+import { iZoneSiteCount } from "../common/models/zoneSiteCount";
 import { iCountryInfo } from "../common/models/countryInfo";
 
 @Component({
@@ -26,7 +26,7 @@ export class MapComponent implements OnInit {
 	private tooltip: any;
 	public active: any = d3.select(null);
 	public activeCountryInfo$: Observable<iCountryInfo>;
-	public countrySiteCounts: iCountrySiteCount[];
+	public zoneSiteCounts: iZoneSiteCount[];
 	private features: any;
 	private featureCollection: any;
 	private zoom: any;
@@ -42,8 +42,8 @@ export class MapComponent implements OnInit {
 		this.jsonService.getData('assets/topojson/countries.json')
 			.subscribe(data => this.setMap(data) , err => console.log(err));
 
-		this.mapService.getCountrySiteCount()
-			.subscribe(data => this.countrySiteCounts = data,
+		this.mapService.getZoneSiteCount()
+			.subscribe(data => this.zoneSiteCounts = data,
 						error => console.log(error));
 
 		this.activeCountryInfo$ = this.mapService.activeCountryInfo;
@@ -102,14 +102,16 @@ export class MapComponent implements OnInit {
 			.on('click' , (d) => {
 				this.clicked(d);
 			});
+
+			console.log(this.zoneSiteCounts)
 	}
 
 	showToolTip(d){
 		this.tooltip.style('opacity' , .90)
 			.html(d.properties.geonunit + '<br/><br/>' + 'Dive Sites: ' +
-				this.countrySiteCounts
-					.filter(function(country)
-						{return country.country_short_name == d.properties.geonunit})[0].site_count);
+				this.zoneSiteCounts
+					.filter(function(zone)
+					{return zone.zone_short_name == d.properties.geonunit})[0].site_count);
 	}
 
 	hideToolTip(){
