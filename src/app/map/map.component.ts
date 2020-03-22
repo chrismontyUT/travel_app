@@ -111,7 +111,7 @@ export class MapComponent implements OnInit {
 			.html(d.properties.geonunit + '<br/><br/>' + 'Dive Sites: ' +
 				this.zoneSiteCounts
 					.filter(function(zone)
-						{return zone.zone_short_name == d.properties.geonunit})[0].site_count);
+					{return zone.zone_short_name == d.properties.geonunit})[0].site_count);
 	}
 
 	hideToolTip(){
