@@ -10,7 +10,7 @@ import { iCountryInfo } from "../common/models/countryInfo";
 
 @Component({
 	selector: 'app-map',
-	providers: [JsonService, MapService],
+	providers: [JsonService],
 	templateUrl: './map.component.html',
 	styleUrls: ['./map.component.scss'],
 	encapsulation: ViewEncapsulation.None
@@ -102,8 +102,6 @@ export class MapComponent implements OnInit {
 			.on('click' , (d) => {
 				this.clicked(d);
 			});
-
-			console.log(this.zoneSiteCounts)
 	}
 
 	showToolTip(d){

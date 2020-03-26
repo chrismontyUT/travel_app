@@ -52,11 +52,18 @@ export class MapService {
   }
 
   getZoneSiteCount(): Observable<iZoneSiteCount[]>{
-    let params = new HttpParams()
-                  .set('regions', this.currentDataStore.regions.join(','))
-                  .set('divetype', this.currentDataStore.diveTypes.join(','))
-                  .set('animals', this.currentDataStore.animalTypes.join(','));
-    return this.http.get<iZoneSiteCount[]>(this.base_url.concat('/map/SiteCountByZone'), {params: params})
+    let params = {};
+    if(this.currentDataStore.regions.length > 0){
+      params['regionList'] = this.currentDataStore.regions.join(',');
+    }
+    if(this.currentDataStore.diveTypes.length > 0){
+      params['scubaList'] = this.currentDataStore.diveTypes.join(',');
+    }
+    if(this.currentDataStore.animalTypes.length > 0){
+      params['animalList'] = this.currentDataStore.animalTypes.join(',');
+    }
+    let httpParams: HttpParams = this.createHttpParams(params);
+    return this.http.get<iZoneSiteCount[]>(this.base_url.concat('/map/SiteCountByZone'), {params: httpParams})
         .pipe(
             catchError(this.handleError<iZoneSiteCount[]>('getZoneSiteCount', []))
         );
@@ -114,7 +121,8 @@ export class MapService {
 
   sendNewSearch(){
     this.currentDataStore = this.newSearchDataStore;
-    this.getZoneSiteCount();
+    this.newSearchDataStore = this.getInitialDataStore();
+    //this.getZoneSiteCount();
   }
 
   processCountryInfoResponse(data: any){
@@ -157,5 +165,15 @@ export class MapService {
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };
+  }
+
+  private createHttpParams(params: {}): HttpParams {
+    let httpParams: HttpParams = new HttpParams();
+    Object.keys(params).forEach(param => {
+      if (params[param]) {
+        httpParams = httpParams.set(param, params[param]);
+      }
+    });
+    return httpParams;
   }
 }

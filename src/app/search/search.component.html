@@ -24,7 +24,6 @@
 		<div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap=".5%" fxLayoutAlign="space-around center">
 			<mat-card class="mat-elevation-z10 result">
 				<mat-card-title class="title">{{questionList[0].questionTitle}}</mat-card-title>
-				<img mat-card-image>
 				<mat-card-content>
 					<ng-container class="answerList" *ngIf="(newSearchRegions$ | async) as answers">
 						<li *ngFor="let answer of answers">
@@ -35,7 +34,6 @@
 			</mat-card>
 			<mat-card class="mat-elevation-z10 result">
 				<mat-card-title class="title">{{questionList[1].questionTitle}}</mat-card-title>
-				<img mat-card-image>
 				<mat-card-content>
 					<ng-container class="answerList" *ngIf="(newSearchDiveTypes$ | async) as answers">
 						<li *ngFor="let answer of answers">
@@ -46,7 +44,6 @@
 			</mat-card>
 			<mat-card class="mat-elevation-z10 result">
 				<mat-card-title class="title">{{questionList[2].questionTitle}}</mat-card-title>
-				<img mat-card-image>
 				<mat-card-content>
 					<ng-container class="answerList" *ngIf="(newSearchAnimalTypes$ | async) as answers">
 						<li *ngFor="let answer of answers">
