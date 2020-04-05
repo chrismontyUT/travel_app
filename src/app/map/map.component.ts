@@ -6,7 +6,8 @@ import { JsonService } from '../services/json.service';
 import { MapService } from "../services/map.service";
 import { Observable } from "rxjs";
 import { iZoneSiteCount } from "../common/models/zoneSiteCount";
-import { iCountryInfo } from "../common/models/countryInfo";
+import { iZoneInfo } from "../common/models/zoneInfo";
+import { iDiveSite } from "../common/models/diveSite";
 
 @Component({
 	selector: 'app-map',
@@ -25,13 +26,15 @@ export class MapComponent implements OnInit {
 	private tooltipOffset: Record<string, number> = {x: 15 , y: -35};
 	private tooltip: any;
 	public active: any = d3.select(null);
-	public activeCountryInfo$: Observable<iCountryInfo>;
+	public activeZoneInfo$: Observable<iZoneInfo>;
 	public zoneSiteCounts: iZoneSiteCount[];
+	public zoneDiveSites: iDiveSite[];
 	private features: any;
 	private featureCollection: any;
 	private zoom: any;
 	private view:any;
 	private sidebarActive: boolean = false;
+	private showSites: boolean = false;
 
 	constructor(
 		private readonly jsonService: JsonService,
@@ -46,9 +49,8 @@ export class MapComponent implements OnInit {
 			.subscribe(data => this.zoneSiteCounts = data,
 						error => console.log(error));
 
-		this.activeCountryInfo$ = this.mapService.activeCountryInfo;
+		this.activeZoneInfo$ = this.mapService.activeZoneInfo;
 	};
-
 
 	setMap(data:Object){
 		this.world = data;
@@ -66,15 +68,13 @@ export class MapComponent implements OnInit {
 
 		this.zoom = d3.zoom()
 			.scaleExtent([1, 50])
-			.on("zoom", () => {
-				this.features.style("stroke-width", 1.5 / d3.event.transform.k + "px");
-				this.features.attr("transform", d3.event.transform);
-			});
+			.on("zoom", () => this.zoomMap());
 
-		this.svg = d3.select('mat-sidenav-content').append('svg')
+		this.svg = d3.select('mat-sidenav-content')
+            .append('svg')
 			.attr('width', '100%')
 			.attr('height', '99%')
-			.call(this.zoom);
+            .call(this.zoom);
 
 		this.view = this.svg.append('rect')
 			.on("click", () => {
@@ -104,6 +104,13 @@ export class MapComponent implements OnInit {
 			});
 	}
 
+	zoomMap(){
+        this.features.style("stroke-width", 1.5 / d3.event.transform.k + "px");
+        this.features.attr("transform", d3.event.transform);
+        this.features.selectAll('.nozoom')
+            .attr('r', 5 / d3.event.transform.k);
+    }
+
 	showToolTip(d){
 		this.tooltip.style('opacity' , .90)
 			.html(d.properties.geonunit + '<br/><br/>' + 'Dive Sites: ' +
@@ -117,20 +124,20 @@ export class MapComponent implements OnInit {
 	}
 
 	clicked(d) {
-		//highlight the clicked country
+		//highlight the clicked zone
 		if (this.active.data()[0] === d) {
 			this.sidebarActive = false;
 			return this.resetMap();
 		}
-		//get country info data
-		this.mapService.sendClickedCountry(d.properties.geonunit);
+		//get zone info data
+		this.mapService.sendClickedZone(d.properties.geonunit);
 		this.active.classed("highlighted", false);
 		this.active = d3.selectAll('path')
 			.filter(function(i){return i['properties']['geonunit'] == d.properties.geonunit})
 			.classed("highlighted" , true);
 		this.sidebarActive = true;
 
-		//zoom to country bounding box
+		//zoom to zone bounding box
 		let bounds = this.path.bounds(d),
 			dx = bounds[1][0] - bounds[0][0],
 			dy = bounds[1][1] - bounds[0][1],
@@ -148,6 +155,8 @@ export class MapComponent implements OnInit {
 		//remove highlighted color upon deselecting
 		this.active.classed("highlighted", false);
 		this.active = d3.select(null);
+		this.showSites = false;
+		this.features.selectAll("circle").remove();
 
 		//reset zoom
 		this.svg.transition()
@@ -155,11 +164,33 @@ export class MapComponent implements OnInit {
       		.call(this.zoom.transform, d3.zoomIdentity ); // updated for d3 v4
 	  }
 
-	displaySites(sites) {
-		console.log(sites);
+	getDiveSites() {
+		console.log('request dive sites');
+		this.showSites = true;
+		this.mapService.getZoneDiveSites()
+			.subscribe(data => this.displayScubaSites(data),
+				error => console.log(error));
 	}
 
-	setActiveCountryData(data){
+	getPADISites() {
+		console.log('request padi sites');
+		this.showSites = true;
+	}
+
+	displayScubaSites(data: iDiveSite[]) {
 		console.log(data);
+		let point = [data[0].longitude, data[0].latitude];
+		let projection = d3_projection.geoRobinson()
+            .rotate([-10, 0, 0])
+            .fitSize([this.width, this.height], this.featureCollection);
+		console.log('point projection: ', projection(point));
+		this.features.selectAll("circle")
+			.data([point]).enter()
+			.append("circle")
+			.attr("cx", function (d) { return projection(d)[0]; })
+			.attr("cy", function (d) { return projection(d)[1]; })
+			.attr("r", "2px")
+			.attr("fill", "red")
+            .attr("class", "nozoom")
 	}
 }

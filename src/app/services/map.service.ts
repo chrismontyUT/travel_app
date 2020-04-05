@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { iZoneSiteCount } from "../common/models/zoneSiteCount";
-import { iCountryInfo } from "../common/models/countryInfo";
-import {BehaviorSubject, Observable, of, Subject} from "rxjs";
+import { iZoneInfo } from "../common/models/zoneInfo";
+import { Observable, of, Subject } from "rxjs";
 import { catchError, map, tap } from 'rxjs/operators';
+import { iDiveSite } from "../common/models/diveSite";
 
 @Injectable({
   providedIn: 'root'
@@ -22,52 +23,55 @@ export class MapService {
   readonly newSearchDiveTypes = this._newSearchDiveTypes.asObservable();
   readonly newSearchAnimalTypes = this._newSearchAnimalTypes.asObservable();
 
-  private lastClickedCountry = new Subject<string>();
-  private _activeCountryInfo = new Subject<iCountryInfo>();
-  readonly activeCountryInfo = this._activeCountryInfo.asObservable();
-  private _countrySiteCounts = new Subject<iZoneSiteCount[]>();
-  readonly countrySiteCounts = this._countrySiteCounts.asObservable();
-  private currentDataStore: {  activeCountryInfo: iCountryInfo,
-                        lastClickedCountry: string,
+  private lastClickedZone = new Subject<string>();
+  private _activeZoneInfo = new Subject<iZoneInfo>();
+  readonly activeZoneInfo = this._activeZoneInfo.asObservable();
+  private _ZoneSiteCounts = new Subject<iZoneSiteCount[]>();
+  readonly ZoneSiteCounts = this._ZoneSiteCounts.asObservable();
+  private currentDataStore: {  activeZoneInfo: iZoneInfo,
+                        lastClickedZone: string,
                         regions: string[],
                         diveTypes: string[],
                         animalTypes: string[] } = this.getInitialDataStore();
 
-  private newSearchDataStore: {  activeCountryInfo: iCountryInfo,
-    lastClickedCountry: string,
+  private newSearchDataStore: {  activeZoneInfo: iZoneInfo,
+    lastClickedZone: string,
     regions: string[],
     diveTypes: string[],
     animalTypes: string[] } = this.getInitialDataStore();
 
   constructor(private http: HttpClient) { }
 
-  getCountryInfo(countryName: string){
+  getZoneInfo(zoneName: string){
     let params = new HttpParams();
-    params = params.append('countryName', countryName);
-    this.http.get<iCountryInfo>(this.base_url.concat('/map/CountryInfo'), { params })
+    params = params.append('zoneName', zoneName);
+    this.http.get<iZoneInfo>(this.base_url.concat('/map/ZoneInfo'), { params })
         .subscribe(
-            data => this.processCountryInfoResponse(data),
-            error => this.handleError<iCountryInfo>('getCountryInfo', error)
+            data => this.processZoneInfoResponse(data),
+            error => this.handleError<iZoneInfo>('getZoneInfo', error)
         )
   }
 
   getZoneSiteCount(): Observable<iZoneSiteCount[]>{
-    let params = {};
-    if(this.currentDataStore.regions.length > 0){
-      params['regionList'] = this.currentDataStore.regions.join(',');
-    }
-    if(this.currentDataStore.diveTypes.length > 0){
-      params['scubaList'] = this.currentDataStore.diveTypes.join(',');
-    }
-    if(this.currentDataStore.animalTypes.length > 0){
-      params['animalList'] = this.currentDataStore.animalTypes.join(',');
-    }
-    let httpParams: HttpParams = this.createHttpParams(params);
+    let httpParams: HttpParams = this.createHttpParams(false);
     return this.http.get<iZoneSiteCount[]>(this.base_url.concat('/map/SiteCountByZone'), {params: httpParams})
         .pipe(
             catchError(this.handleError<iZoneSiteCount[]>('getZoneSiteCount', []))
         );
   }
+
+  getZoneDiveSites(): Observable<iDiveSite[]>{
+    let httpParams: HttpParams = this.createHttpParams(true);
+    return this.http.get<iDiveSite[]>(this.base_url.concat('/map/getZoneDiveSites'), {params: httpParams})
+        .pipe(
+            catchError(this.handleError<iDiveSite[]>('getZoneDiveSites', []))
+        );
+  }
+
+  /*getZonePADISites(): Observable<any>{
+    let httpParams: HttpParams = this.createHttpParams();
+
+  }*/
 
   updateAnswers(answer: string, task: string, questionName: string){
     if(questionName == 'Where Are You Going?'){
@@ -112,11 +116,11 @@ export class MapService {
     this._newSearchAnimalTypes.next(this.newSearchDataStore.animalTypes);
   }
 
-  sendClickedCountry(countryName: string){
-    if(countryName == this.newSearchDataStore.lastClickedCountry) return;
-    this.lastClickedCountry.next(countryName);
-    this.newSearchDataStore.lastClickedCountry = countryName;
-    this.getCountryInfo(countryName);
+  sendClickedZone(zoneName: string){
+    if(zoneName == this.currentDataStore.lastClickedZone) return;
+    this.lastClickedZone.next(zoneName);
+    this.currentDataStore.lastClickedZone = zoneName;
+    this.getZoneInfo(zoneName);
   }
 
   sendNewSearch(){
@@ -125,17 +129,17 @@ export class MapService {
     //this.getZoneSiteCount();
   }
 
-  processCountryInfoResponse(data: any){
-    this.newSearchDataStore.activeCountryInfo = data;
+  processZoneInfoResponse(data: any){
+    this.newSearchDataStore.activeZoneInfo = data;
     console.log("data returned!!!", data);
-    this._activeCountryInfo.next(data);
+    this._activeZoneInfo.next(data);
   }
 
   getInitialDataStore(){
-    const emptyCountryInfo = (): iCountryInfo => ({
-      country_full_name: 'EMPTY',
+    const emptyZoneInfo = (): iZoneInfo => ({
+      zone_full_name: 'EMPTY',
       iso2: '',
-      country_short_name: 'EMPTY!!!',
+      zone_short_name: 'EMPTY!!!',
       continent: '',
       sub_region: '',
       population: 0,
@@ -147,10 +151,10 @@ export class MapService {
       best_time_to_dive: '',
       bad_time_to_go: '',
       bodies_of_water: '',
-      country_description: ''
+      zone_description: ''
     });
-    this._activeCountryInfo.next(emptyCountryInfo());
-    return { activeCountryInfo: emptyCountryInfo(), lastClickedCountry: '', regions: [], diveTypes: [], animalTypes: [] }
+    this._activeZoneInfo.next(emptyZoneInfo());
+    return { activeZoneInfo: emptyZoneInfo(), lastClickedZone: '', regions: [], diveTypes: [], animalTypes: [] }
   }
 
   /**
@@ -167,7 +171,21 @@ export class MapService {
     };
   }
 
-  private createHttpParams(params: {}): HttpParams {
+  private createHttpParams(sendActiveCountry: boolean): HttpParams {
+    let params = {};
+    if(sendActiveCountry){
+      params['zoneName'] = this.currentDataStore.lastClickedZone;
+    } else {
+      if (this.currentDataStore.regions.length > 0) {
+        params['regionList'] = this.currentDataStore.regions.join(',');
+      }
+    }
+    if(this.currentDataStore.diveTypes.length > 0){
+      params['scubaList'] = this.currentDataStore.diveTypes.join(',');
+    }
+    if(this.currentDataStore.animalTypes.length > 0){
+      params['animalList'] = this.currentDataStore.animalTypes.join(',');
+    }
     let httpParams: HttpParams = new HttpParams();
     Object.keys(params).forEach(param => {
       if (params[param]) {

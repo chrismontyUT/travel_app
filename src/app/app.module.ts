@@ -27,8 +27,8 @@ import { Router } from '@angular/router';
 import { SearchQuestionComponent } from './search-question/search-question.component';
 import { SearchQuestionCardComponent } from './search-question-card/search-question-card.component';
 import { LoaderModule } from './loader/loader.module';
-import {MatTabsModule} from "@angular/material/tabs";
-import {MatExpansionModule} from "@angular/material/expansion";
+import { MatTabsModule } from "@angular/material/tabs";
+import { MatExpansionModule } from "@angular/material/expansion";
 
 @NgModule({
   declarations: [

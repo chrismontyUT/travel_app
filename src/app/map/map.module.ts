@@ -5,7 +5,8 @@ import { JsonService } from "../services/json.service";
 import { MapComponent } from "./map.component";
 import { CommonModule } from "@angular/common";
 import { MatButtonModule } from "@angular/material/button";
-import {MatCardModule} from "@angular/material/card";
+import { MatCardModule } from "@angular/material/card";
+import { SiteCardComponent } from "../site-card/site-card.component";
 
 @NgModule({
     imports: [
@@ -19,7 +20,8 @@ import {MatCardModule} from "@angular/material/card";
         JsonService
     ],
     declarations: [
-        MapComponent
+        MapComponent,
+        SiteCardComponent
     ],
     exports: [
         MapComponent

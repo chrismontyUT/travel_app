@@ -8,7 +8,7 @@ app-map {
 //	position: relative;
 //}
 
-.countryName {
+.zoneName {
 	text-align: center;
 }
 
@@ -99,4 +99,8 @@ mat-sidenav {
 
 .mat-drawer-backdrop.mat-drawer-shown{
 	display: none;
+}
+
+.site {
+	fill: black;
 }

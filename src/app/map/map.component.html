@@ -1,36 +1,45 @@
 <mat-sidenav-container>
     <mat-sidenav [(opened)]="sidebarActive">
-        <ng-container class="countryInfo" *ngIf="(activeCountryInfo$ |async) as info">
-            <h1 class="countryName">{{info.country_short_name}}</h1>
-            <p class="countryName">{{info.country_full_name}}</p>
+        <ng-container class="zoneInfo" *ngIf="(activeZoneInfo$ |async) as info">
+            <h1 class="zoneName">{{info.zone_short_name}}</h1>
+            <p class="zoneName">{{info.zone_full_name}}</p>
             <hr>
-            <p>{{info.country_description}}</p>
-            <mat-card class="mat-elevation-z6">
-                <mat-card-title>Diving in {{info.country_short_name}}:</mat-card-title>
-                <mat-card-content>
-                    <ul>
-                        <li>Best Time To Dive: {{info.best_time_to_dive}}</li>
-                        <li>Bodies of Water: {{info.bodies_of_water}}</li>
-                        <li>Peak Tourist Season: {{info.peak_tourist_season}}</li>
-                    </ul>
-                </mat-card-content>
-            </mat-card>
-            <mat-card class="mat-elevation-z6">
-                <mat-card-title>Quick Facts: </mat-card-title>
-                <mat-card-content>
-                    <ul>
-                        <li>Capitol: {{info.capitol}}</li>
-                        <li>Population: {{info.population}}</li>
-                        <li>Major Geography: {{info.major_geography}}</li>
-                        <li>Predominant Language: {{info.predominant_language}}</li>
-                        <li>Driving Side: {{info.driving_side}}</li>
-                    </ul>
-                </mat-card-content>
-            </mat-card>
-            <div class="button-row">
-                <button mat-raised-button color="primary">View Dive Sites!</button>
-                <button mat-raised-button color="primary">View PADI Dive Centers</button>
-            </div>
+            <ng-container *ngIf="!showSites">
+                <p>{{info.zone_description}}</p>
+                <mat-card class="mat-elevation-z6">
+                    <mat-card-title>Diving in {{info.zone_short_name}}:</mat-card-title>
+                    <mat-card-content>
+                        <ul>
+                            <li>Best Time To Dive: {{info.best_time_to_dive}}</li>
+                            <li>Bodies of Water: {{info.bodies_of_water}}</li>
+                            <li>Peak Tourist Season: {{info.peak_tourist_season}}</li>
+                        </ul>
+                    </mat-card-content>
+                </mat-card>
+                <mat-card class="mat-elevation-z6">
+                    <mat-card-title>Quick Facts: </mat-card-title>
+                    <mat-card-content>
+                        <ul>
+                            <li>Capitol: {{info.capitol}}</li>
+                            <li>Population: {{info.population}}</li>
+                            <li>Major Geography: {{info.major_geography}}</li>
+                            <li>Predominant Language: {{info.predominant_language}}</li>
+                            <li>Driving Side: {{info.driving_side}}</li>
+                        </ul>
+                    </mat-card-content>
+                </mat-card>
+                <div class="button-row">
+                    <button mat-raised-button color="primary" (click)="getDiveSites()">View Dive Sites!</button>
+                    <button mat-raised-button color="primary" (click)="getPADISites()">View PADI Dive Centers</button>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="showSites">
+                <ng-container *ngFor="let dive of zoneDiveSites">
+                    <app-site-card>
+                        [dive]="dive"
+                    </app-site-card>
+                </ng-container>
+            </ng-container>
         </ng-container>
     </mat-sidenav>
     <mat-sidenav-content></mat-sidenav-content>
