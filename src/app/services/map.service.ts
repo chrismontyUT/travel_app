@@ -92,7 +92,6 @@ export class MapService {
     else{
       this.newSearchDataStore.regions.splice(this.newSearchDataStore.regions.indexOf(region, 1));
     }
-    console.log('service updated with region');
     this._newSearchRegions.next(this.newSearchDataStore.regions);
   }
 
@@ -102,7 +101,6 @@ export class MapService {
     } else{
       this.newSearchDataStore.diveTypes.splice(this.newSearchDataStore.regions.indexOf(type, 1));
     }
-    console.log('service updated with dive type');
     this._newSearchDiveTypes.next(this.newSearchDataStore.diveTypes);
   }
 
@@ -112,7 +110,6 @@ export class MapService {
     } else{
       this.newSearchDataStore.animalTypes.splice(this.newSearchDataStore.regions.indexOf(type, 1));
     }
-    console.log('service updated with animal type');
     this._newSearchAnimalTypes.next(this.newSearchDataStore.animalTypes);
   }
 
@@ -131,7 +128,6 @@ export class MapService {
 
   processZoneInfoResponse(data: any){
     this.newSearchDataStore.activeZoneInfo = data;
-    console.log("data returned!!!", data);
     this._activeZoneInfo.next(data);
   }
 

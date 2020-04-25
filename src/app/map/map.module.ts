@@ -7,6 +7,7 @@ import { CommonModule } from "@angular/common";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
 import { SiteCardComponent } from "../site-card/site-card.component";
+import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 
 @NgModule({
     imports: [
@@ -14,7 +15,8 @@ import { SiteCardComponent } from "../site-card/site-card.component";
         LoaderModule,
         CommonModule,
         MatButtonModule,
-        MatCardModule
+        MatCardModule,
+        FontAwesomeModule
     ],
     providers: [
         JsonService

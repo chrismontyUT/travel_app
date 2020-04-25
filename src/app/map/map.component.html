@@ -1,12 +1,13 @@
 <mat-sidenav-container>
     <mat-sidenav [(opened)]="sidebarActive">
         <ng-container class="zoneInfo" *ngIf="(activeZoneInfo$ |async) as info">
+            <fa-icon [icon]="exitIcon"></fa-icon>
             <h1 class="zoneName">{{info.zone_short_name}}</h1>
             <p class="zoneName">{{info.zone_full_name}}</p>
             <hr>
             <ng-container *ngIf="!showSites">
-                <p>{{info.zone_description}}</p>
-                <mat-card class="mat-elevation-z6">
+                <p class="sidenav-content zone-description">{{info.zone_description}}</p>
+                <mat-card class="mat-elevation-z6 sidenav-content">
                     <mat-card-title>Diving in {{info.zone_short_name}}:</mat-card-title>
                     <mat-card-content>
                         <ul>
@@ -16,7 +17,7 @@
                         </ul>
                     </mat-card-content>
                 </mat-card>
-                <mat-card class="mat-elevation-z6">
+                <mat-card class="mat-elevation-z6 sidenav-content">
                     <mat-card-title>Quick Facts: </mat-card-title>
                     <mat-card-content>
                         <ul>

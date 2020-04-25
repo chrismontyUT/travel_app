@@ -3,7 +3,7 @@ import { Question } from '../shared/utils';
 import { questionList } from './questionsList';
 import { SearchQuestionComponent } from '../search-question/search-question.component'
 import { MapService } from "../services/map.service";
-import {Observable} from "rxjs";
+import { Observable } from "rxjs";
 import { Router } from "@angular/router";
 
 @Component({

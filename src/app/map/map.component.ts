@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import * as d3 from 'd3';
 import * as d3_projection from 'd3-geo-projection';
 import * as topojson from 'topojson';
+import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import { JsonService } from '../services/json.service';
 import { MapService } from "../services/map.service";
 import { Observable } from "rxjs";
@@ -35,6 +36,8 @@ export class MapComponent implements OnInit {
 	private view:any;
 	private sidebarActive: boolean = false;
 	private showSites: boolean = false;
+	public exitIcon = faTimesCircle;
+	public backIcon;
 
 	constructor(
 		private readonly jsonService: JsonService,
@@ -89,6 +92,7 @@ export class MapComponent implements OnInit {
 			.enter()
 			.append('path')
 			.attr( 'd', this.path )
+			.attr('class', 'zone')
 			.on('mouseover' , (d) => {
 				this.showToolTip(d);
 				})
@@ -132,7 +136,7 @@ export class MapComponent implements OnInit {
 		//get zone info data
 		this.mapService.sendClickedZone(d.properties.geonunit);
 		this.active.classed("highlighted", false);
-		this.active = d3.selectAll('path')
+		this.active = d3.selectAll('.zone')
 			.filter(function(i){return i['properties']['geonunit'] == d.properties.geonunit})
 			.classed("highlighted" , true);
 		this.sidebarActive = true;
@@ -150,7 +154,7 @@ export class MapComponent implements OnInit {
 			.duration(750)
 			.call( this.zoom.transform, d3.zoomIdentity.translate(translate[0],translate[1]).scale(scale) ); // updated f
 	  }
-	  
+
 	resetMap() {
 		//remove highlighted color upon deselecting
 		this.active.classed("highlighted", false);
@@ -165,7 +169,6 @@ export class MapComponent implements OnInit {
 	  }
 
 	getDiveSites() {
-		console.log('request dive sites');
 		this.showSites = true;
 		this.mapService.getZoneDiveSites()
 			.subscribe(data => this.displayScubaSites(data),
@@ -173,23 +176,23 @@ export class MapComponent implements OnInit {
 	}
 
 	getPADISites() {
-		console.log('request padi sites');
 		this.showSites = true;
 	}
 
 	displayScubaSites(data: iDiveSite[]) {
-		console.log(data);
-		let point = [data[0].longitude, data[0].latitude];
+		let coordinates = Array<Array<number>>();
+		for (let i=0; i < data.length; i++){
+			coordinates.push([data[i].longitude, data[i].latitude]);
+		}
 		let projection = d3_projection.geoRobinson()
             .rotate([-10, 0, 0])
             .fitSize([this.width, this.height], this.featureCollection);
-		console.log('point projection: ', projection(point));
 		this.features.selectAll("circle")
-			.data([point]).enter()
+			.data(coordinates).enter()
 			.append("circle")
 			.attr("cx", function (d) { return projection(d)[0]; })
 			.attr("cy", function (d) { return projection(d)[1]; })
-			.attr("r", "2px")
+			.attr("r", "1px")
 			.attr("fill", "red")
             .attr("class", "nozoom")
 	}

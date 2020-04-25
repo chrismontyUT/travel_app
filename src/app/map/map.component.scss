@@ -40,9 +40,9 @@ mat-card {
 }
 
 .button-row {
-	//position: absolute;
+	position: absolute;
 	bottom: 20px;
-	margin: 20px;
+	margin-left: 55px;
 }
 .mat-raised-button{
 	margin: 15px;
@@ -94,7 +94,16 @@ mat-sidenav-content {
 }
 
 mat-sidenav {
-	width: 450px;
+	width: 500px;
+}
+
+.sidenav-content {
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+.zone-description{
+	margin-bottom: 25px;
 }
 
 .mat-drawer-backdrop.mat-drawer-shown{
@@ -103,4 +112,10 @@ mat-sidenav {
 
 .site {
 	fill: black;
+}
+
+fa-icon {
+	float: right;
+	margin-right: 10px;
+	font-size: 250%;
 }
