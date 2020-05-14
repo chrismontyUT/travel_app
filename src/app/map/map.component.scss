@@ -4,12 +4,9 @@ app-map {
 	width: 100%;
 }
 
-//.countryInfo {
-//	position: relative;
-//}
-
 .zoneName {
 	text-align: center;
+	padding-left: 40px;
 }
 
 .section {
@@ -114,8 +111,11 @@ mat-sidenav {
 	fill: black;
 }
 
-fa-icon {
+.exit-icon {
 	float: right;
-	margin-right: 10px;
+	margin-right: 5px;
 	font-size: 250%;
+	border: none;
+	padding: 0;
+	background: none;
 }

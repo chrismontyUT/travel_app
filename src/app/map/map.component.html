@@ -1,7 +1,7 @@
 <mat-sidenav-container>
     <mat-sidenav [(opened)]="sidebarActive">
         <ng-container class="zoneInfo" *ngIf="(activeZoneInfo$ |async) as info">
-            <fa-icon [icon]="exitIcon"></fa-icon>
+            <fa-icon class="exit-icon" (click)="exitIconClicked()" [icon]="exitIcon"></fa-icon>
             <h1 class="zoneName">{{info.zone_short_name}}</h1>
             <p class="zoneName">{{info.zone_full_name}}</p>
             <hr>
@@ -36,8 +36,8 @@
             </ng-container>
             <ng-container *ngIf="showSites">
                 <ng-container *ngFor="let dive of zoneDiveSites">
-                    <app-site-card>
-                        [dive]="dive"
+                    <app-site-card class="sidenav-content"
+                        [siteName]="dive.dive_name">
                     </app-site-card>
                 </ng-container>
             </ng-container>

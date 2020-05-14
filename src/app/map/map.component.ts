@@ -179,7 +179,13 @@ export class MapComponent implements OnInit {
 		this.showSites = true;
 	}
 
+	exitIconClicked(){
+		this.sidebarActive = false;
+		this.resetMap();
+	}
+
 	displayScubaSites(data: iDiveSite[]) {
+		this.zoneDiveSites = data;
 		let coordinates = Array<Array<number>>();
 		for (let i=0; i < data.length; i++){
 			coordinates.push([data[i].longitude, data[i].latitude]);

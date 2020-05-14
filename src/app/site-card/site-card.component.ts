@@ -8,7 +8,7 @@ import { iDiveSite } from "../common/models/diveSite";
 })
 export class SiteCardComponent implements OnInit {
 
-  @Input() dive: iDiveSite;
+  @Input() siteName: string;
 
   constructor() { }
 
